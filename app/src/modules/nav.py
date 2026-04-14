@@ -71,10 +71,23 @@ def admin_home_nav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon="🖥️")
 
 
-def ml_model_mgmt_nav():
+def administrator_dashboard_nav():
     st.sidebar.page_link(
-        "pages/21_ML_Model_Mgmt.py", label="ML Model Management", icon="🏢"
+        "pages/21_Administrator_Dashboard.py", label="Administrator Dashboard", icon="🏢"
     )
+
+def system_status_nav():
+    st.sidebar.page_link(
+        "pages/22_System_Status.py", label="System Status", icon="🏢"
+    )
+
+def backups_nav():
+    st.sidebar.page_link(
+        "pages/23_Backups.py", label="Backups", icon="🏢"
+    )
+
+# ---- Role: data analyst ----------------------------------------------------
+
 
 
 # ---- Sidebar assembly -------------------------------------------------------
@@ -86,7 +99,7 @@ def SideBarLinks(show_home=False):
     """
 
     # Logo appears at the top of the sidebar on every page
-    st.sidebar.image("assets/Campus_Connector_Logo.png", width=150)
+    st.sidebar.image("static/Campus_Connector_Logo.png", width=150)
 
     # If no one is logged in, send them to the Home (login) page
     if "authenticated" not in st.session_state:
@@ -113,7 +126,9 @@ def SideBarLinks(show_home=False):
 
         if st.session_state["role"] == "administrator":
             admin_home_nav()
-            ml_model_mgmt_nav()
+            administrator_dashboard_nav()
+            system_status_nav()
+            backups_nav()
 
     # About link appears at the bottom for all roles
     about_page_nav()
