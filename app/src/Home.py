@@ -36,24 +36,25 @@ logger.info("Loading the Home page of the app")
 st.title('Campus Connector')
 st.write('#### Hi! As which user would you like to log in?')
 
-if st.button("Act as John Smith, a Student Attendee",
+if st.button("Act as Alex Chen, a Student Attendee",
              type='primary',
              use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'student'
-    st.session_state['first_name'] = 'John'
-    # user_id 10 is the seeded student in the DDL, so RSVPs/notifications work out of the box
-    st.session_state['user_id'] = 10
+    st.session_state['first_name'] = 'Alex'
+    # matches the seeded student in database-files/02-campus-connector-insert.sql
+    st.session_state['user_id'] = 1
     logger.info("Logging in as Student Persona")
     st.switch_page('pages/40_Student_Home.py')
 
-if st.button("Act as Alexa Ziti, an Event Coordinator",
+if st.button("Act as Taylor Nguyen, an Event Coordinator",
              type='primary',
              use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'event_coordinator'
-    st.session_state['first_name'] = 'Alexa'
-    st.session_state['user_id'] = 11
+    st.session_state['first_name'] = 'Taylor'
+    # matches the seeded event coordinator in the insert script
+    st.session_state['user_id'] = 3
     logger.info("Logging in as Event Coordinator Persona")
     st.switch_page('pages/50_Event_Coord_Home.py')
 

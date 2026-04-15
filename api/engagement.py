@@ -52,14 +52,21 @@ def delete_registration(id):
 def get_user_registrations(id):
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute('''SELECT r.registration_id, e.event_id, e.title, e.date,
+    # category comes from the event_category_map join table
+    cursor.execute('''SELECT r.registration_id, e.event_id, e.title,
+                             CAST(e.date AS CHAR) AS date,
                              CAST(e.start_time AS CHAR) AS start_time,
                              CAST(e.end_time AS CHAR) AS end_time,
                              e.status AS event_status, r.status,
-                             r.registered_at, ec.category_name
+                             r.registered_at,
+                             (SELECT ec.category_name
+                              FROM event_category_map ecm
+                              JOIN event_categories ec
+                                ON ecm.category_id = ec.category_id
+                              WHERE ecm.event_id = e.event_id
+                              LIMIT 1) AS category_name
                       FROM registration r
                       JOIN events e ON r.event_id = e.event_id
-                      JOIN event_categories ec ON e.category_id = ec.category_id
                       WHERE r.user_id = %s
                       ORDER BY e.date, e.start_time''', (id,))
     return jsonify(cursor.fetchall()), 200

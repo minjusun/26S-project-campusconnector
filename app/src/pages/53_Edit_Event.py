@@ -46,7 +46,7 @@ def parse_time(s):
 
 cat_options = {c['category_name']: c['category_id'] for c in categories}
 loc_options = {
-    f"Location #{l['location_id']} (cap {l['capacity']})": l['location_id']
+    f"{l['location_name']} (cap {l['capacity']})": l['location_id']
     for l in locations
 }
 

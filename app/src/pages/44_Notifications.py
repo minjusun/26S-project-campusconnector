@@ -8,7 +8,7 @@ SideBarLinks()
 API = "http://web-api:4000"
 
 st.title("Notifications")
-st.write("Reminders and updates about the events you care about.")
+st.write("Reminders about your events.")
 
 user_id = st.session_state.get('user_id')
 if not user_id:
@@ -27,10 +27,10 @@ if not resp.ok:
 
 notes = resp.json()
 if not notes:
-    st.info("No notifications yet. You'll see reminders here after you RSVP.")
+    st.info("No notifications yet.")
     st.stop()
 
 for n in notes:
     with st.container(border=True):
         st.write(f"**{n.get('message', '')}**")
-        st.caption(f"Event #{n.get('event_id')}  •  Sent {n.get('sent_at', '')}")
+        st.caption(f"Event #{n.get('event_id')} | Sent {n.get('sent_at', '')}")
