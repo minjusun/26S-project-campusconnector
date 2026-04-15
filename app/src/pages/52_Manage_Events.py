@@ -8,7 +8,7 @@ SideBarLinks()
 API = "http://web-api:4000"
 
 st.title("Manage Events")
-st.write("All published events. Click **Edit** to update one, or **Delete** to remove it.")
+st.write("All events. Edit or delete below.")
 
 try:
     resp = requests.get(f"{API}/events", timeout=5)
@@ -36,8 +36,8 @@ for ev in events:
         with info:
             st.subheader(ev.get('title', 'Untitled'))
             st.caption(
-                f"📅 {ev.get('date')}  •  🕒 {ev.get('start_time')} – {ev.get('end_time')}"
-                f"  •  🏷️ {ev.get('category_name', '—')}  •  Status: {ev.get('status', '—')}"
+                f"{ev.get('date')} | {ev.get('start_time')} - {ev.get('end_time')}"
+                f" | {ev.get('category_name', 'n/a')} | Status: {ev.get('status', 'n/a')}"
             )
         with edit_col:
             if st.button("Edit", key=f"edit_{ev['event_id']}"):

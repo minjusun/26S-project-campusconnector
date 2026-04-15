@@ -7,8 +7,8 @@ SideBarLinks()
 name = st.session_state.get('first_name', 'Coordinator')
 
 st.title(f"Welcome, {name}!")
-st.write("### Event Coordinator Workspace")
-st.write("Plan new events, edit published ones, and manage RSVPs — all in one place.")
+st.write("### Event Coordinator")
+st.write("Create events, edit existing ones, and handle RSVPs.")
 
 if st.button("Create a New Event", type='primary', use_container_width=True):
     st.switch_page('pages/51_Create_Event.py')

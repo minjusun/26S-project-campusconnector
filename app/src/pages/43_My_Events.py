@@ -8,7 +8,7 @@ SideBarLinks()
 API = "http://web-api:4000"
 
 st.title("My Events")
-st.write("Everything you've RSVP'd to, sorted by date.")
+st.write("Stuff you signed up for.")
 
 user_id = st.session_state.get('user_id')
 if not user_id:
@@ -35,24 +35,16 @@ if not regs:
 
 st.write(f"You have **{len(regs)}** registration(s).")
 
-badges = {
-    'registered': '🟢 Registered',
-    'approved':   '🟢 Approved',
-    'waitlisted': '🟡 Waitlisted',
-    'cancelled':  '🔴 Cancelled',
-}
-
 for reg in regs:
     with st.container(border=True):
         left, right = st.columns([4, 1])
         with left:
             st.subheader(reg.get('title', 'Untitled'))
             st.caption(
-                f"📅 {reg.get('date')}  •  🕒 {reg.get('start_time')} – {reg.get('end_time')}"
-                f"  •  🏷️ {reg.get('category_name', '—')}"
+                f"{reg.get('date')} | {reg.get('start_time')} - {reg.get('end_time')}"
+                f" | {reg.get('category_name', 'n/a')}"
             )
-            status = (reg.get('status') or '').lower()
-            st.write(f"**RSVP status:** {badges.get(status, reg.get('status', '—'))}")
+            st.write(f"**RSVP status:** {reg.get('status', 'n/a')}")
         with right:
             if st.button("Cancel RSVP", key=f"cancel_{reg['registration_id']}"):
                 try:

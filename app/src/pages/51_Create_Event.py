@@ -9,7 +9,7 @@ SideBarLinks()
 API = "http://web-api:4000"
 
 st.title("Create Event")
-st.write("Fill in the details below to publish a new campus event.")
+st.write("Fill out the form and hit publish.")
 
 try:
     categories = requests.get(f"{API}/event_categories", timeout=5).json() or []
@@ -19,12 +19,12 @@ except requests.exceptions.RequestException as e:
     st.stop()
 
 if not categories or not locations:
-    st.warning("No categories or locations available yet — seed the database first.")
+    st.warning("No categories or locations yet. Seed the database first.")
     st.stop()
 
 cat_options = {c['category_name']: c['category_id'] for c in categories}
 loc_options = {
-    f"Location #{l['location_id']} (cap {l['capacity']})": l['location_id']
+    f"{l['location_name']} (cap {l['capacity']})": l['location_id']
     for l in locations
 }
 
@@ -42,10 +42,10 @@ with st.form("create_event_form"):
     cat_label = st.selectbox("Category *", list(cat_options.keys()))
     loc_label = st.selectbox("Location *", list(loc_options.keys()))
 
-    image_url = st.text_input("Flyer / Image URL", placeholder="https://...")
+    image_url = st.text_input("Image URL", placeholder="https://...")
     description = st.text_area(
         "Description",
-        placeholder="Tell students what to expect at this event...",
+        placeholder="what's the event about?",
         height=150,
     )
 

@@ -8,7 +8,7 @@ SideBarLinks()
 API = "http://web-api:4000"
 
 st.title("Manage Attendance")
-st.write("Pick an event, then approve, waitlist, or remove RSVPs to stay within capacity.")
+st.write("Pick an event and handle RSVPs.")
 
 try:
     events = requests.get(f"{API}/events", timeout=5).json() or []
@@ -20,12 +20,12 @@ if not events:
     st.info("No events to manage yet.")
     st.stop()
 
-event_map = {f"{e['title']} — {e['date']} (#{e['event_id']})": e['event_id'] for e in events}
+event_map = {f"{e['title']} - {e['date']} (#{e['event_id']})": e['event_id'] for e in events}
 picked = st.selectbox("Select event", list(event_map.keys()))
 event_id = event_map[picked]
 
 meta = next((e for e in events if e['event_id'] == event_id), {})
-st.caption(f"Capacity: **{meta.get('capacity', '—')}**  •  Status: **{meta.get('status', '—')}**")
+st.caption(f"Capacity: **{meta.get('capacity', 'n/a')}** | Status: **{meta.get('status', 'n/a')}**")
 
 try:
     regs = requests.get(f"{API}/events/{event_id}/registration", timeout=5).json() or []
@@ -79,8 +79,8 @@ for reg in regs:
         cols = st.columns([3, 1, 1, 1, 1])
         with cols[0]:
             st.write(f"**{name}**")
-            st.caption(f"{reg.get('email', '')}  •  RSVP #{rid}")
-            st.write(f"Status: `{reg.get('status', '—')}`")
+            st.caption(f"{reg.get('email', '')} | RSVP #{rid}")
+            st.write(f"Status: `{reg.get('status', 'n/a')}`")
         with cols[1]:
             if st.button("Approve", key=f"ap_{rid}"):
                 update_status(rid, 'approved')

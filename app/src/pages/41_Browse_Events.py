@@ -8,9 +8,9 @@ SideBarLinks()
 API = "http://web-api:4000"
 
 st.title("Browse Upcoming Events")
-st.write("Find events that match your interests.")
+st.write("Filter by category or search by name.")
 
-# grab categories for the dropdown
+# pull categories for the dropdown
 categories = []
 try:
     r = requests.get(f"{API}/event_categories", timeout=5)
@@ -53,10 +53,10 @@ else:
             with left:
                 st.subheader(ev.get('title', 'Untitled'))
                 st.caption(
-                    f"📅 {ev.get('date')}  •  🕒 {ev.get('start_time')} – {ev.get('end_time')}"
-                    f"  •  🏷️ {ev.get('category_name', '—')}"
+                    f"{ev.get('date')} | {ev.get('start_time')} - {ev.get('end_time')}"
+                    f" | {ev.get('category_name', 'n/a')}"
                 )
-                st.write(f"Capacity: {ev.get('capacity', '—')}  •  Status: {ev.get('status', '—')}")
+                st.write(f"Capacity: {ev.get('capacity', 'n/a')} | Status: {ev.get('status', 'n/a')}")
             with right:
                 if st.button("View details", key=f"view_{ev['event_id']}"):
                     st.session_state['selected_event_id'] = ev['event_id']

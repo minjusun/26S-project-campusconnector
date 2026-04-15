@@ -33,15 +33,15 @@ if ev.get('image_url'):
 a, b = st.columns(2)
 with a:
     st.write(f"**Date:** {ev.get('date')}")
-    st.write(f"**Time:** {ev.get('start_time')} – {ev.get('end_time')}")
-    st.write(f"**Category:** {ev.get('category_name', '—')}")
+    st.write(f"**Time:** {ev.get('start_time')} to {ev.get('end_time')}")
+    st.write(f"**Category:** {ev.get('category_name', 'n/a')}")
 with b:
-    st.write(f"**Location ID:** {ev.get('location_id')}")
+    st.write(f"**Location:** {ev.get('location_name', 'n/a')}")
     st.write(f"**Capacity:** {ev.get('capacity')}")
     st.write(f"**Status:** {ev.get('status')}")
 
 st.write("### Description")
-st.write(ev.get('description') or "_No description provided._")
+st.write(ev.get('description') or "_no description._")
 
 st.divider()
 st.write("### RSVP")
@@ -57,7 +57,7 @@ with left:
             try:
                 r = requests.post(f"{API}/registration", json=payload, timeout=5)
                 if r.status_code == 201:
-                    st.success("You're registered! Check 'My Events' to review.")
+                    st.success("you're in! check My Events to see it.")
                 else:
                     st.error(f"RSVP failed: {r.text}")
             except requests.exceptions.RequestException as e:
