@@ -65,6 +65,58 @@ def classification_nav():
     )
 
 
+# ---- Role: student ----------------------------------------------------------
+
+def student_home_nav():
+    st.sidebar.page_link(
+        "pages/40_Student_Home.py", label="Student Home", icon="🎓"
+    )
+
+
+def browse_events_nav():
+    st.sidebar.page_link(
+        "pages/41_Browse_Events.py", label="Browse Events", icon="🔎"
+    )
+
+
+def my_events_nav():
+    st.sidebar.page_link(
+        "pages/43_My_Events.py", label="My Events", icon="📅"
+    )
+
+
+def notifications_nav():
+    st.sidebar.page_link(
+        "pages/44_Notifications.py", label="Notifications", icon="🔔"
+    )
+
+
+# ---- Role: event_coordinator -----------------------------------------------
+
+def event_coord_home_nav():
+    st.sidebar.page_link(
+        "pages/50_Event_Coord_Home.py", label="Coordinator Home", icon="🗂️"
+    )
+
+
+def create_event_nav():
+    st.sidebar.page_link(
+        "pages/51_Create_Event.py", label="Create Event", icon="➕"
+    )
+
+
+def manage_events_nav():
+    st.sidebar.page_link(
+        "pages/52_Manage_Events.py", label="Manage Events", icon="🛠️"
+    )
+
+
+def manage_attendance_nav():
+    st.sidebar.page_link(
+        "pages/54_Manage_Attendance.py", label="Manage Attendance", icon="✅"
+    )
+
+
 # ---- Role: administrator ----------------------------------------------------
 
 def admin_home_nav():
@@ -114,6 +166,18 @@ def SideBarLinks(show_home=False):
         if st.session_state["role"] == "administrator":
             admin_home_nav()
             ml_model_mgmt_nav()
+
+        if st.session_state["role"] == "student":
+            student_home_nav()
+            browse_events_nav()
+            my_events_nav()
+            notifications_nav()
+
+        if st.session_state["role"] == "event_coordinator":
+            event_coord_home_nav()
+            create_event_nav()
+            manage_events_nav()
+            manage_attendance_nav()
 
     # About link appears at the bottom for all roles
     about_page_nav()

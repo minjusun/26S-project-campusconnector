@@ -6,10 +6,19 @@ backlogs = Blueprint('backlogs', __name__)
 @backlogs.route('/notifications', methods=['GET'])
 def get_notifications():
     db = get_db()
-    cursor = db.cursor()
-    cursor.execute('''SELECT notification_id, user_id, event_id, message, sent_at 
-                      FROM notifications 
-                      ORDER BY sent_at DESC''')
+    cursor = db.cursor(dictionary=True)
+    user_id = request.args.get('user_id')
+    if user_id:
+        cursor.execute('''SELECT notification_id, user_id, event_id, message,
+                                 CAST(sent_at AS CHAR) AS sent_at
+                          FROM notifications
+                          WHERE user_id = %s
+                          ORDER BY sent_at DESC''', (user_id,))
+    else:
+        cursor.execute('''SELECT notification_id, user_id, event_id, message,
+                                 CAST(sent_at AS CHAR) AS sent_at
+                          FROM notifications
+                          ORDER BY sent_at DESC''')
     rows = cursor.fetchall()
     return jsonify(rows), 200
 
@@ -35,7 +44,7 @@ def delete_notification(id):
 @backlogs.route('/logs', methods=['GET'])
 def get_logs():
     db = get_db()
-    cursor = db.cursor()
+    cursor = db.cursor(dictionary=True)
     cursor.execute('''SELECT log_id, user_id, action_type, description, created_at 
                       FROM logs 
                       ORDER BY created_at DESC''')

@@ -6,16 +6,22 @@ users = Blueprint('users', __name__)
 @users.route('/users', methods=['GET'])
 def get_users():
     db = get_db()
-    cursor = db.cursor()
-    cursor.execute('SELECT * FROM users')
+    cursor = db.cursor(dictionary=True)
+    cursor.execute('''SELECT user_id, role_id, first_name, last_name, email,
+                             status, created_at
+                      FROM users
+                      ORDER BY user_id''')
     rows = cursor.fetchall()
     return jsonify(rows), 200
 
 @users.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
     db = get_db()
-    cursor = db.cursor()
-    cursor.execute('SELECT * FROM users WHERE user_id = %s', (id,))
+    cursor = db.cursor(dictionary=True)
+    cursor.execute('''SELECT user_id, role_id, first_name, last_name, email,
+                             status, created_at
+                      FROM users
+                      WHERE user_id = %s''', (id,))
     row = cursor.fetchone()
     return jsonify(row), 200
 
