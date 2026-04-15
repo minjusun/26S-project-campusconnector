@@ -9,12 +9,4 @@ st.set_page_config(layout='wide')
 
 SideBarLinks()
 
-st.title('App Administration Page')
-
-st.write('## Model 1 Maintenance')
-
-if st.button('Administrator Dashboard',
-             type='primary',
-             use_container_width=True):
-    results = requests.get('http://web-api:4000/prediction/10/25').json()
-    st.dataframe(results)
+st.title('Administrator Dashboard')

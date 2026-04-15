@@ -151,7 +151,7 @@ def SideBarLinks(show_home=False):
     """
 
     # Logo appears at the top of the sidebar on every page
-    st.sidebar.image("static/Campus_Connector_Logo.png", width=150)
+    st.sidebar.image("/app/static/Campus_Connector_Logo.png", width=150)
 
     # If no one is logged in, send them to the Home (login) page
     if "authenticated" not in st.session_state:
