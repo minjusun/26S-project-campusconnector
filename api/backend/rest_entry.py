@@ -1,4 +1,8 @@
 from flask import Flask
+from users import users
+from events import events
+from engagement import engagement
+from backLogs import backlogs
 from dotenv import load_dotenv
 import os
 import logging
@@ -37,5 +41,12 @@ def create_app():
     app.logger.info("create_app(): registering blueprints")
     app.register_blueprint(simple_routes)
     app.register_blueprint(ngos, url_prefix="/ngo")
+
+    #register the flask blueprints
+    app.register_blueprint(users)
+    app.register_blueprint(events)
+    app.register_blueprint(engagement)
+    app.register_blueprint(backlogs)
+
 
     return app
