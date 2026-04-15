@@ -15,7 +15,7 @@ top1, top2, top3 = st.columns(3)
 
 with top1:
     st.write("##### Last Backup")
-    st.write("### March 29, 2026 -")
+    st.write("### March 29, 2026")
     st.write("### 02:00 AM")
     st.success("Successful")
 
