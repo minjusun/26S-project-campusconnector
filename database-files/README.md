@@ -17,3 +17,24 @@ docker compose down db -v && docker compose up db
 ```
 
 The `-v` flag will also delete the volume associated with MySQL, which is necessary to rerun the sql files. 
+
+#read me-REMOVE SPECS ABOVE BEFORE SUBMISSION!!!!!
+
+#Campus Connector
+**Team Name: ** Data Visionaries
+**Team Members: **Benjamin Knox, Reinier DeVault, Minju Sung, SungBin Lee, Tzu Yang Chen
+
+##Overview
+Campus Connector is a data-driven campus event management platform for students to discover and RSVP to new events, event managers to organize new events, data analysts to track event statistics, and administrators to monitor the platform.
+
+##Key Features
+1. Filters student attendees by event categories, notifications, and other relevant information. It improves efficiency and accuracy for the users by allowing them to narrow down large datasets to only relevant data, as well as improving data visualization for analysts.
+
+2. Allows student coordinators to manage attendees by utilizing the event editor. In it, they can accept, deny, or waitlist applicants based on the capacity of the event serving as a security measure and providing an additional layer of control to the event managers.
+Our goal is to transform campus events from scattered and underutilized into an organized, highly engaging experience for everyone.
+
+
+##Pre-requisites
+
+##Setup?
+-specs...
