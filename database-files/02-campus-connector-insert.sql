@@ -8,10 +8,30 @@ INSERT INTO user_roles (role_name) VALUES
 
 -- sample users — password_hash is a placeholder, not a real hash
 INSERT INTO users (role_id, first_name, last_name, email, password_hash) VALUES
-    (1, 'Alex',   'Chen',    'alex.chen@example.edu',    'x'),
-    (1, 'Jordan', 'Smith',   'jordan.smith@example.edu', 'x'),
-    (2, 'Taylor', 'Nguyen',  'taylor.n@example.edu',     'x'),
-    (3, 'Morgan', 'Patel',   'morgan.p@example.edu',     'x');
+    (1, 'Alex',   'Chen',    'alex.chen@northeastern.edu',    'x'),
+    (1, 'Jordan', 'Smith',   'jordan.smith@northeastern.edu', 'x'),
+    (2, 'Taylor', 'Nguyen',  'taylor.n@northeastern.edu',     'x'),
+    (3, 'Morgan', 'Patel',   'morgan.p@northeastern.edu',     'x'),
+    (3, 'Augustus', 'Code', 'augustus.code@northeastern.edu', 'x'),
+    (1, 'Horton', 'Brumwell', 'horton.brumwell@northeastern.edu', 'x'),
+    (3, 'Brandyn', 'Bonhome', 'brandyn.bonhome@northeastern.edu', 'x'),
+    (3, 'Mercy', 'Dowry', 'mercy.dowry@northeastern.edu', 'x'),
+    (1, 'Batholomew', 'De Freyne', 'batholomew.de freyne@northeastern.edu', 'x'),
+    (1, 'Lindsey', 'Tysack', 'lindsey.tysack@northeastern.edu', 'x'), 
+    (2, 'Darya', 'Brocket', 'darya.brocket@northeastern.edu', 'x'),
+    (1, 'Tally', 'Weiner', 'tally.weiner@northeastern.edu', 'x'),
+    (2, 'Matthew', 'Renfield', 'matthew.renfield@northeastern.edu', 'x'),
+    (3, 'Aryn', 'Bydaway', 'aryn.bydaway@northeastern.edu', 'x'),
+    (1, 'Farly', 'De la Perrelle', 'farly.de la perrelle@northeastern.edu', 'x'),
+    (2, 'Maribelle', 'Codi', 'maribelle.codi@northeastern.edu', 'x'),
+    (3, 'Irma', 'Root', 'irma.root@northeastern.edu', 'x'),
+    (1, 'Sutherlan', 'MacKim', 'sutherlan.mackim@northeastern.edu', 'x'),
+    (3, 'Damaris', 'Payfoot', 'damaris.payfoot@northeastern.edu', 'x'),
+    (3, 'Holly-anne', 'Muscroft', 'holly-anne.muscroft@northeastern.edu', 'x'),
+    (1, 'Griz', 'Nendick', 'griz.nendick@northeastern.edu', 'x'),
+    (3, 'Zaria', 'Garralts', 'zaria.garralts@northeastern.edu', 'x'),
+    (3, 'Carr', 'Dockerty', 'carr.dockerty@northeastern.edu', 'x'),
+    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x');
 
 -- categories students can filter by
 INSERT INTO event_categories (category_name) VALUES
@@ -52,3 +72,39 @@ INSERT INTO registration (event_id, user_id, status) VALUES
 INSERT INTO notifications (user_id, event_id, message) VALUES
     (1, 1, 'Reminder: Spring Career Fair is coming up on May 10!'),
     (1, 2, 'Don''t forget to bring your laptop to the CS3200 study jam.');
+
+INSERT INTO attendance (user_id, event_id, attendance_status) VALUES
+    (1, 1, 'checked_in'),
+    (2, 3, 'checked_in'),
+    (1, 2, 'checked_in');
+
+INSERT INTO waitlist (event_id, user_id, queued_pos, status) VALUES
+    (4, 2, 1, 'waiting'),
+    (1, 2, 2, 'promoted');
+
+INSERT INTO event_views (event_id, user_id) VALUES
+    (1, 1),
+    (1, 2),
+    (2, 1),
+    (3, 2),
+    (4, 1);
+
+INSERT INTO comments (user_id, event_id, comment_text, status) VALUES
+    (1, 1, 'Looking forward to this event!', 'visible'),
+    (2, 2, 'Will there be practice problems at the study jam?', 'visible'),
+    (1, 3, 'This sounds really interesting.', 'visible');
+
+INSERT INTO event_history (user_id, event_id, feedback_rating) VALUES
+    (1, 1, 5),
+    (2, 3, 4),
+    (1, 2, 5);
+
+INSERT INTO logs (user_id, action_type, description) VALUES
+    (3, 'create_event', 'Created Spring Career Fair 2026'),
+    (3, 'create_event', 'Created CS3200 Study Jam'),
+    (4, 'view_dashboard', 'Viewed admin dashboard');
+
+INSERT INTO backups (user_id, status) VALUES
+    (4, 'completed'),
+    (4, 'completed'),
+    (4, 'failed');

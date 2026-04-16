@@ -32,30 +32,39 @@ with top3:
     
 st.markdown("")
 
-left_col, right_col = st.columns([2.2, 1])
+st.markdown("### Backup History")
+backup_data = [
+    ("March 29, 2026", "02:00 AM", "Success", "3 GB"),
+    ("March 28, 2026", "02:00 AM", "Success", "7.5 GB"),
+    ("March 27, 2026", "02:00 AM", "Success", "2.5 GB"),
+    ("March 26, 2026", "02:00 AM", "Failed", "N/A"),
+    ("March 25, 2026", "02:00 AM", "Success", "1.4 GB"),
+]
 
-with left_col:
-    with st.container(border=True):
-        st.markdown("### System Health")
+with st.container(border=True):
 
-        health_items = [
-            ("Database integrity", "Last run: 2 hours ago", "ok"),
-            ("File system consistency", "Last run: 2 hours ago", "ok"),
-            ("Backup encryption", "Last run: 2 hours ago", "ok"),
-            ("Storage capacity", "Last run: 2 hours ago", "warning"),
-            ("Network connectivity", "Last run: 5 minutes ago", "ok"),
-        ]
+    # Header row
+    col1, col2, col3 = st.columns([3, 2, 1])
+    col1.markdown("**DATE & TIME**")
+    col2.markdown("**STATUS**")
+    col3.markdown("**SIZE**")
 
-        for title, subtitle, status in health_items:
-            icon = "🟢" if status == "ok" else "🟠"
+    st.divider()
 
-            col1, col2 = st.columns([0.1, 0.8])
+for date, time, status, size in backup_data:
+        col1, col2, col3 = st.columns([3, 2, 1])
 
-            with col1:
-             st.write(icon)
+        with col1:
+            st.markdown(f"**{date}**")
+            st.caption(time)
 
-             with col2:
-                st.write(f"**{title}**")
-                st.caption(subtitle)
+        with col2:
+            if status == "Success":
+                st.success("Success")
+            else:
+                st.error("Failed")
 
-            st.divider()
+        with col3:
+            st.write(size)
+
+        st.divider()
