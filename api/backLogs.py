@@ -3,7 +3,7 @@ from backend.db_connection import get_db
 
 backlogs = Blueprint('backlogs', __name__)
 
-#?user_id=... returns notifications for specific user, else returns all-made date format more readable
+#returns notifications for specific user, else returns all-made date format more readable
 #returns notification ID, event info, message, date, etc.
 @backlogs.route('/notifications', methods=['GET'])
 def get_notifications():

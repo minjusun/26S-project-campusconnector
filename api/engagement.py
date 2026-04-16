@@ -3,7 +3,7 @@ from backend.db_connection import get_db
 
 engagement = Blueprint('engagement', __name__)
 
-
+# for user engagement features like event registration and comments
 @engagement.route('/registration', methods=['GET'])
 def get_registrations():
     db = get_db()
@@ -11,7 +11,7 @@ def get_registrations():
     cursor.execute('SELECT * FROM registration ORDER BY registered_at DESC')
     return jsonify(cursor.fetchall()), 200
 
-
+# create a new registration for an event
 @engagement.route('/registration', methods=['POST'])
 def create_registration():
     data = request.get_json()
@@ -26,7 +26,7 @@ def create_registration():
     return jsonify({'message': 'Registered successfully',
                     'registration_id': new_id}), 201
 
-
+# update registration status (e.g. for attendance tracking or cancellation)
 @engagement.route('/registration/<int:id>', methods=['PUT'])
 def update_registration(id):
     data = request.get_json()
@@ -38,7 +38,7 @@ def update_registration(id):
     db.commit()
     return jsonify({'message': 'Registration updated'}), 200
 
-
+# delete a registration (e.g. for cancellation)
 @engagement.route('/registration/<int:id>', methods=['DELETE'])
 def delete_registration(id):
     db = get_db()
@@ -47,7 +47,7 @@ def delete_registration(id):
     db.commit()
     return jsonify({'message': 'Registration cancelled'}), 200
 
-
+# comments endpoints for users to comment on events, with optional status for moderation
 @engagement.route('/users/<int:id>/comments', methods=['GET'])
 def get_user_comments(id):
     db = get_db()
@@ -60,7 +60,7 @@ def get_user_comments(id):
     rows = cursor.fetchall()
     return jsonify(rows), 200
 
-
+# create a new comment for an event
 @engagement.route('/events/<int:id>/registration', methods=['GET'])
 def get_event_registrations(id):
     # roster for a single event (used by the coordinator attendance page)

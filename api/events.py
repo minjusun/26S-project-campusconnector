@@ -19,7 +19,7 @@ CATEGORY_ID_SUBQUERY = '''(SELECT ecm.category_id
                            WHERE ecm.event_id = e.event_id
                            LIMIT 1) AS category_id'''
 
-
+# returns all events, with optional query params to filter by category, status, upcoming only, or search by title keyword
 @events.route('/events', methods=['GET'])
 def get_events():
     # optional query params: category, status, upcoming, q
@@ -65,7 +65,7 @@ def get_events():
     cursor.execute(query, params)
     return jsonify(cursor.fetchall()), 200
 
-
+# get a single event by ID, with category name included
 @events.route('/events/<int:id>', methods=['GET'])
 def get_event(id):
     db = get_db()
@@ -87,7 +87,7 @@ def get_event(id):
         return jsonify(None), 404
     return jsonify(row), 200
 
-
+# create, update, delete endpoints for events. For create and update, the category is passed as an optional category_id in the request body and linked through the join table.
 @events.route('/events', methods=['POST'])
 def create_event():
     data = request.get_json()
@@ -110,7 +110,8 @@ def create_event():
     db.commit()
     return jsonify({'message': 'Event created', 'event_id': new_id}), 201
 
-
+# update and delete endpoints for events. 
+# For update, the category is passed as an optional category_id in the request body and linked through the join table.
 @events.route('/events/<int:id>', methods=['PUT'])
 def update_event(id):
     data = request.get_json()
@@ -136,7 +137,7 @@ def update_event(id):
     db.commit()
     return jsonify({'message': 'Event updated'}), 200
 
-
+# For delete, the event_category_map join table has ON DELETE CASCADE so it cleans up category links automatically when we delete the event.
 @events.route('/events/<int:id>', methods=['DELETE'])
 def delete_event(id):
     db = get_db()
@@ -146,7 +147,7 @@ def delete_event(id):
     db.commit()
     return jsonify({'message': 'Event deleted'}), 200
 
-
+# get all event categories and locations for dropdowns when creating/editing events
 @events.route('/event_categories', methods=['GET'])
 def get_categories():
     db = get_db()
@@ -154,7 +155,7 @@ def get_categories():
     cursor.execute('SELECT category_id, category_name FROM event_categories ORDER BY category_name')
     return jsonify(cursor.fetchall()), 200
 
-
+# returns all event locations for dropdown when creating/editing events
 @events.route('/event_location', methods=['GET'])
 def get_locations():
     db = get_db()
