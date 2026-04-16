@@ -11,23 +11,60 @@ st.set_page_config(layout="wide")
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
 
-st.title("Prediction with Regression")
+st.title("Insights & Predictions")
+st.caption("Use event data to identify patterns, make recommendations, and predict future engagement.")
 
-# create a 2 column layout
-col1, col2 = st.columns(2)
+top1, top2, top3 = st.columns(3)
 
-# add one number input for variable 1 into column 1
-with col1:
-    var_01 = st.number_input("Variable 01:", step=1)
+with top1:
+    st.write("##### Predicted High Attendance")
+    st.write("### Career Fair")
+    st.caption("Expected to have the strongest turnout")
 
-# add another number input for variable 2 into column 2
-with col2:
-    var_02 = st.number_input("Variable 02:", step=1)
+with top2:
+    st.write("##### Best Event Day")
+    st.write("### Thursday")
+    st.caption("Highest average attendance")
 
-# add a button to use the values entered into the number field to send to the
-# prediction function via the REST API
-if st.button("Calculate Prediction", type="primary", use_container_width=True):
-    logger.info(f"var_01 = {var_01}, var_02 = {var_02}")
-    results = requests.get(f"http://web-api:4000/prediction/{var_01}/{var_02}")
-    json_results = results.json()
-    st.dataframe(json_results)
+with top3:
+    st.write("##### Recommendation")
+    st.write("### Promote Earlier")
+    st.caption("Low-turnout events may benefit from earlier advertising")
+
+st.markdown("")
+
+st.markdown("### Attendance Predictions")
+
+prediction_data = [
+    ("Spring Career Fair", "Career", "240"),
+    ("AI Workshop", "Academic", "170"),
+    ("Club Networking Night", "Social", "110"),
+    ("Resume Review Session", "Career", "95"),
+    ("Leadership Panel", "Leadership", "125"),
+]
+
+st.table(
+    {
+        "Upcoming Event": [row[0] for row in prediction_data],
+        "Category": [row[1] for row in prediction_data],
+        "Predicted Attendance": [row[2] for row in prediction_data],
+    }
+)
+
+st.markdown("")
+
+
+st.markdown("### Analyst Alerts")
+
+st.info("Leadership Panel is projected to perform well if scheduled during the middle of the week.")
+st.warning("Club Networking Night may need additional promotion to increase attendance.")
+st.success("Career-focused events continue to show the highest predicted engagement.")
+
+st.markdown("")
+
+st.download_button(
+    label="Export Predictions",
+    data="Sample predictions export",
+    file_name="insights_predictions.txt",
+    mime="text/plain"
+)
