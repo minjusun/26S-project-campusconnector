@@ -33,37 +33,24 @@ def map_demo_nav():
     st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon="🗺️")
 
 
-# ---- Role: usaid_worker -----------------------------------------------------
+# ---- Role: Data Analyst -----------------------------------------------------
 
-def usaid_worker_home_nav():
+def data_analyst_home_nav():
     st.sidebar.page_link(
-        "pages/10_USAID_Worker_Home.py", label="USAID Worker Home", icon="🏠"
+        "pages/31_Data_Analyst_Home.py", label="Data Analyst Home", icon="🏠"
     )
 
-
-def ngo_directory_nav():
-    st.sidebar.page_link("pages/14_NGO_Directory.py", label="NGO Directory", icon="📁")
-
-
-def add_ngo_nav():
-    st.sidebar.page_link("pages/15_Add_NGO.py", label="Add New NGO", icon="➕")
+def engagement_analytics_nav():
+    st.sidebar.page_link("pages/32_Engagement_Analytics.py", label="Engagement Analytics", icon="📊")
 
 
-def prediction_nav():
+def event_performance_nav():
+    st.sidebar.page_link("pages/33_Event_Performance.py", label="Event Performance", icon="🏆")
+
+def insights_prediction_nav():
     st.sidebar.page_link(
-        "pages/11_Prediction.py", label="Regression Prediction", icon="📈"
+        "pages/34_Insights_Predictions.py", label="Insights & Predictions", icon="📈"
     )
-
-
-def api_test_nav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon="🛜")
-
-
-def classification_nav():
-    st.sidebar.page_link(
-        "pages/13_Classification.py", label="Classification Demo", icon="🌺"
-    )
-
 
 # ---- Role: student ----------------------------------------------------------
 
@@ -173,13 +160,12 @@ def SideBarLinks(show_home=False):
             world_bank_viz_nav()
             map_demo_nav()
 
-        if st.session_state["role"] == "usaid_worker":
-            usaid_worker_home_nav()
-            ngo_directory_nav()
-            add_ngo_nav()
-            prediction_nav()
-            api_test_nav()
-            classification_nav()
+        if st.session_state["role"] == "data_analyst":
+            data_analyst_home_nav()
+            engagement_analytics_nav()
+            event_performance_nav()
+            insights_prediction_nav()
+
 
         if st.session_state["role"] == "administrator":
             admin_home_nav()
