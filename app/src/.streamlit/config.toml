@@ -20,4 +20,6 @@ font="monospace"
 
 [server]
 runOnSave = true
+
+[server]
 enableStaticServing = true
