@@ -27,3 +27,8 @@ if st.button('Backups',
              type='primary',
              use_container_width=True):
     st.switch_page('pages/23_Backups.py')
+    
+if st.button('Logs',
+             type='primary',
+             use_container_width=True):
+    st.switch_page('pages/24_Logs.py')
