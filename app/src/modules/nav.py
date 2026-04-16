@@ -130,17 +130,17 @@ def administrator_dashboard_nav():
 
 def system_status_nav():
     st.sidebar.page_link(
-        "pages/22_System_Status.py", label="System Status", icon="🏢"
+        "pages/22_System_Status.py", label="System Status", icon="🛠️"
     )
 
 def backups_nav():
     st.sidebar.page_link(
-        "pages/23_Backups.py", label="Backups", icon="🏢"
+        "pages/23_Backups.py", label="Backups", icon="💾"
     )
 
 def logs_nav():
     st.sidebar.page_link(
-        "pages/24_Logs.py", label="Logs", icon="🏢"
+        "pages/24_Logs.py", label="Logs", icon="📝"
     )
 
 # ---- Role: data analyst ----------------------------------------------------

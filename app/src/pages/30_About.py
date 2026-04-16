@@ -9,12 +9,13 @@ st.write("# About this App")
 
 st.markdown(
     """
-    This is a demo app for Data and Software in International Government and Politics Dialogue 2025 Project Course.  
+    This is a demo application for the CampusConnector platform, a data-driven system designed to improve how events are created, managed, and experienced across campus.
 
-    The goal of this demo is to provide information on the tech stack 
-    being used as well as demo some of the features of the various platforms. 
+    The goal of this demo is to showcase the different user roles within the system, including students, event coordinators, data analysts, and system administrators. Each role highlights a unique perspective, from discovering and managing events to analyzing engagement data and maintaining system performance.
 
-    Stay tuned for more information and features to come!
+    The app also demonstrates the underlying tech stack and how the frontend and backend work together to support real-time data, user interactions, and administrative control.
+
+    Stay tuned for additional features, including personalized event recommendations, advanced analytics, and expanded system capabilities.
     """
 )
 
