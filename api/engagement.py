@@ -48,28 +48,17 @@ def delete_registration(id):
     return jsonify({'message': 'Registration cancelled'}), 200
 
 
-@engagement.route('/users/<int:id>/registration', methods=['GET'])
-def get_user_registrations(id):
+@engagement.route('/users/<int:id>/comments', methods=['GET'])
+def get_user_comments(id):
     db = get_db()
-    cursor = db.cursor(dictionary=True)
-    # category comes from the event_category_map join table
-    cursor.execute('''SELECT r.registration_id, e.event_id, e.title,
-                             CAST(e.date AS CHAR) AS date,
-                             CAST(e.start_time AS CHAR) AS start_time,
-                             CAST(e.end_time AS CHAR) AS end_time,
-                             e.status AS event_status, r.status,
-                             r.registered_at,
-                             (SELECT ec.category_name
-                              FROM event_category_map ecm
-                              JOIN event_categories ec
-                                ON ecm.category_id = ec.category_id
-                              WHERE ecm.event_id = e.event_id
-                              LIMIT 1) AS category_name
-                      FROM registration r
-                      JOIN events e ON r.event_id = e.event_id
-                      WHERE r.user_id = %s
-                      ORDER BY e.date, e.start_time''', (id,))
-    return jsonify(cursor.fetchall()), 200
+    cursor = db.cursor()
+    cursor.execute('''SELECT c.comment_id, c.event_id, c.comment_text, 
+                      c.status, c.created_at
+                      FROM comments c
+                      WHERE c.user_id = %s
+                      ORDER BY c.created_at DESC''', (id,))
+    rows = cursor.fetchall()
+    return jsonify(rows), 200
 
 
 @engagement.route('/events/<int:id>/registration', methods=['GET'])
