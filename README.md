@@ -133,3 +133,25 @@ _Note_: This project only contains the infrastructure for a hypothetical ML mode
    - We've put a sample (read _fake_) ML model in the `model01.py` file. The `predict` function will be called by the Flask REST API to perform '_real-time_' prediction based on model parameter values that are stored in the database. **Important**: you would never want to hard code the model parameter weights directly in the prediction function.
 1. The prediction route for the REST API is in `api/backend/simple/simple_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and sends it back to Streamlit as JSON.
 1. Back in Streamlit, check out `app/src/pages/11_Prediction.py`. Here, two numeric input fields are created. When the button is pressed, it makes a request to the REST API at `/prediction/{var_01}/{var_02}` and passes the values from the two inputs as URL path parameters. It gets back the results from the route and displays them.
+
+
+### read me-REMOVE SPECS ABOVE BEFORE SUBMISSION!!!!!
+
+##Campus Connector
+**Team Name: ** Data Visionaries
+**Team Members: **Benjamin Knox, Reinier DeVault, Minju Sung, SungBin Lee, Tzu Yang Chen
+
+## Overview
+Campus Connector is a data-driven campus event management platform for students to discover and RSVP to new events, event managers to organize new events, data analysts to track event statistics, and administrators to monitor the platform.
+
+## Key Features
+1. Filters student attendees by event categories, notifications, and other relevant information. It improves efficiency and accuracy for the users by allowing them to narrow down large datasets to only relevant data, as well as improving data visualization for analysts.
+
+2. Allows student coordinators to manage attendees by utilizing the event editor. In it, they can accept, deny, or waitlist applicants based on the capacity of the event serving as a security measure and providing an additional layer of control to the event managers.
+Our goal is to transform campus events from scattered and underutilized into an organized, highly engaging experience for everyone.
+
+
+## Pre-requisites
+
+## Setup?
+-specs...
