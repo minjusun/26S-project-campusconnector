@@ -8,6 +8,8 @@ st.set_page_config(layout='wide')
 
 SideBarLinks()
 
+
+
 st.title('System Administrator Home Page')
 st.write('### What would you like to do today?')
 

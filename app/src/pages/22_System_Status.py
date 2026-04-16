@@ -11,7 +11,32 @@ SideBarLinks()
 
 st.title('System Status Dashboard')
 
+btn1, btn2 = st.columns(2)
 
+with btn1:
+    st.button("Run System Check", use_container_width=True, type="primary")
+
+with btn2:
+    st.button("View Detailed Report", use_container_width=True)
+
+top1, top2, top3 = st.columns(3)
+
+with top1:
+    st.write("##### Overall Status")
+    st.write("### Healthy")
+    st.success("All critical services operational")
+
+with top2:
+    st.write("##### Last Full Check")
+    st.write("### Today, 2:00 PM")
+    st.caption("Next scan in 50 minutes")
+
+with top3:
+    st.write("##### Active Alerts")
+    st.write("### 1 Warning")   
+    st.caption("No critical incidents")
+
+st.markdown("")
     
 left_col, right_col = st.columns([2.2, 1])
 
@@ -40,3 +65,4 @@ with left_col:
                 st.caption(subtitle)
 
             st.divider()
+
