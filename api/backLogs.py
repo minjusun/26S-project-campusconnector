@@ -12,24 +12,15 @@ def get_notifications():
     user_id = request.args.get('user_id')
     if user_id:
         cursor.execute('''SELECT notification_id, user_id, event_id, message,
-                                 DATE_FORMAT(sent_at, '%Y-%m-%d %H:%i:%s') AS sent_at
+                                 CAST(sent_at AS CHAR) AS sent_at
                           FROM notifications
                           WHERE user_id = %s
                           ORDER BY sent_at DESC''', (user_id,))
     else:
         cursor.execute('''SELECT notification_id, user_id, event_id, message,
-                                 DATE_FORMAT(sent_at, '%Y-%m-%d %H:%i:%s') AS sent_at
+                                 CAST(sent_at AS CHAR) AS sent_at
                           FROM notifications
                           ORDER BY sent_at DESC''')
-    rows = cursor.fetchall()
-    return jsonify(rows), 200
-
-# get all notifications for a user
-@backlogs.route('/notifications', methods=['GET'])
-def get_notifications():
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute('SELECT * FROM notifications ORDER BY sent_at DESC')
     rows = cursor.fetchall()
     return jsonify(rows), 200
 

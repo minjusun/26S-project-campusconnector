@@ -8,9 +8,9 @@ INSERT INTO user_roles (role_name) VALUES
 
 -- sample users — password_hash is a placeholder, not a real hash
 INSERT INTO users (role_id, first_name, last_name, email, password_hash) VALUES
-    (1, 'Alex',   'Chen',    'alex.chen@northeastern.edu',    'x'),
+    (1, 'John',   'Smith',   'john.smith@northeastern.edu',    'x'),
     (1, 'Jordan', 'Smith',   'jordan.smith@northeastern.edu', 'x'),
-    (2, 'Taylor', 'Nguyen',  'taylor.n@northeastern.edu',     'x'),
+    (2, 'Alexa',  'Ziti',    'alexa.ziti@northeastern.edu',   'x'),
     (3, 'Morgan', 'Patel',   'morgan.p@northeastern.edu',     'x'),
     (3, 'Augustus', 'Code', 'augustus.code@northeastern.edu', 'x'),
     (1, 'Horton', 'Brumwell', 'horton.brumwell@northeastern.edu', 'x'),

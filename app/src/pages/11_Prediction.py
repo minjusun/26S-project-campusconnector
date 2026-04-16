@@ -1,3 +1,4 @@
+import os
 import logging
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,7 @@ with col2:
 # prediction function via the REST API
 if st.button("Calculate Prediction", type="primary", use_container_width=True):
     logger.info(f"var_01 = {var_01}, var_02 = {var_02}")
-    results = requests.get(f"http://web-api:4000/prediction/{var_01}/{var_02}")
+    API = os.environ.get("WEB_API_URL", "http://localhost:4000")
+    results = requests.get(f"{API}/prediction/{var_01}/{var_02}")
     json_results = results.json()
     st.dataframe(json_results)

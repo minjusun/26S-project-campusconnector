@@ -1,3 +1,4 @@
+import os
 from datetime import date, time
 import streamlit as st
 import requests
@@ -6,7 +7,7 @@ from modules.nav import SideBarLinks
 st.set_page_config(layout='wide')
 SideBarLinks()
 
-API = "http://web-api:4000"
+API = os.environ.get("WEB_API_URL", "http://localhost:4000")
 
 st.title("Create Event")
 st.write("Fill out the form and hit publish.")

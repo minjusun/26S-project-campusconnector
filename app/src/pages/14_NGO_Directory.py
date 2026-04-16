@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
@@ -10,7 +11,8 @@ SideBarLinks()
 st.title("NGO Directory")
 
 # API endpoint
-API_URL = "http://web-api:4000/ngo/ngos"
+API = os.environ.get("WEB_API_URL", "http://localhost:4000")
+API_URL = f"{API}/ngo/ngos"
 
 # Create filter columns
 col1, col2, col3 = st.columns(3)
@@ -81,4 +83,4 @@ try:
 
 except requests.exceptions.RequestException as e:
     st.error(f"Error connecting to the API: {str(e)}")
-    st.info("Please ensure the API server is running on http://web-api:4000")
+    st.info("Please ensure the API server is running")

@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
@@ -18,7 +19,8 @@ if ngo_id is None:
         st.switch_page("pages/14_NGO_Directory.py")
 else:
     # API endpoint
-    API_URL = f"http://web-api:4000/ngo/ngos/{ngo_id}"
+    API = os.environ.get("WEB_API_URL", "http://localhost:4000")
+    API_URL = f"{API}/ngo/ngos/{ngo_id}"
 
     try:
         # Fetch NGO details

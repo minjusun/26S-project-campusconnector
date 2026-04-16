@@ -52,6 +52,30 @@ def update_user(id):
     db.commit()
     return jsonify({'message': 'User updated'}), 200
 
+# get all events a user has registered for (used by My Events page)
+@users.route('/users/<int:id>/registration', methods=['GET'])
+def get_user_registrations(id):
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute('''SELECT r.registration_id, r.status,
+                             e.event_id, e.title,
+                             CAST(e.date AS CHAR) AS date,
+                             CAST(e.start_time AS CHAR) AS start_time,
+                             CAST(e.end_time AS CHAR) AS end_time,
+                             el.location_name, el.capacity,
+                             (SELECT ec.category_name
+                              FROM event_category_map ecm
+                              JOIN event_categories ec
+                                ON ecm.category_id = ec.category_id
+                              WHERE ecm.event_id = e.event_id
+                              LIMIT 1) AS category_name
+                      FROM registration r
+                      JOIN events e ON r.event_id = e.event_id
+                      JOIN event_location el ON e.location_id = el.location_id
+                      WHERE r.user_id = %s
+                      ORDER BY e.date, e.start_time''', (id,))
+    return jsonify(cursor.fetchall()), 200
+
 # delete a user (admin only)
 @users.route('/users/<int:id>', methods=['DELETE'])
 def delete_user(id):

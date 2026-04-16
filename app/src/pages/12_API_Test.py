@@ -1,3 +1,4 @@
+import os
 import logging
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,8 @@ If the container isn't running, this page will fall back to dummy data.
 
 data = {}
 try:
-    data = requests.get('http://web-api:4000/data').json()
+    API = os.environ.get("WEB_API_URL", "http://localhost:4000")
+    data = requests.get(f'{API}/data').json()
 except requests.exceptions.RequestException as e:
     st.write("**Important**: Could not connect to sample API, so using dummy data.")
     data = {"a": {"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
