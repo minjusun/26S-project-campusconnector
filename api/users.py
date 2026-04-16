@@ -3,6 +3,7 @@ from backend.db_connection import get_db
 
 users = Blueprint('users', __name__)
 
+# endpoints for user management (admin can manage users, and users can view/update their own profile)
 @users.route('/users', methods=['GET'])
 def get_users():
     db = get_db()
@@ -14,6 +15,7 @@ def get_users():
     rows = cursor.fetchall()
     return jsonify(rows), 200
 
+# get a single user by ID
 @users.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
     db = get_db()
@@ -25,6 +27,7 @@ def get_user(id):
     row = cursor.fetchone()
     return jsonify(row), 200
 
+# create a new user (admin only)
 @users.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -37,6 +40,7 @@ def create_user():
     db.commit()
     return jsonify({'message': 'User created'}), 201
 
+# update user information (admin can update any user, users can update their own profile)
 @users.route('/users/<int:id>', methods=['PUT'])
 def update_user(id):
     data = request.get_json()
@@ -48,6 +52,7 @@ def update_user(id):
     db.commit()
     return jsonify({'message': 'User updated'}), 200
 
+# delete a user (admin only)
 @users.route('/users/<int:id>', methods=['DELETE'])
 def delete_user(id):
     db = get_db()

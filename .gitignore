@@ -6,3 +6,6 @@ secrets/
 .env.local
 */logs/*
 .vscode/
+
+# Virtual environment
+.venv

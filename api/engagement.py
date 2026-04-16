@@ -3,7 +3,7 @@ from backend.db_connection import get_db
 
 engagement = Blueprint('engagement', __name__)
 
-
+# for user engagement features like event registration and comments
 @engagement.route('/registration', methods=['GET'])
 def get_registrations():
     db = get_db()
@@ -11,7 +11,7 @@ def get_registrations():
     cursor.execute('SELECT * FROM registration ORDER BY registered_at DESC')
     return jsonify(cursor.fetchall()), 200
 
-
+# create a new registration for an event
 @engagement.route('/registration', methods=['POST'])
 def create_registration():
     data = request.get_json()
@@ -26,7 +26,7 @@ def create_registration():
     return jsonify({'message': 'Registered successfully',
                     'registration_id': new_id}), 201
 
-
+# update registration status (e.g. for attendance tracking or cancellation)
 @engagement.route('/registration/<int:id>', methods=['PUT'])
 def update_registration(id):
     data = request.get_json()
@@ -38,7 +38,7 @@ def update_registration(id):
     db.commit()
     return jsonify({'message': 'Registration updated'}), 200
 
-
+# delete a registration (e.g. for cancellation)
 @engagement.route('/registration/<int:id>', methods=['DELETE'])
 def delete_registration(id):
     db = get_db()
@@ -47,31 +47,20 @@ def delete_registration(id):
     db.commit()
     return jsonify({'message': 'Registration cancelled'}), 200
 
-
-@engagement.route('/users/<int:id>/registration', methods=['GET'])
-def get_user_registrations(id):
+# comments endpoints for users to comment on events, with optional status for moderation
+@engagement.route('/users/<int:id>/comments', methods=['GET'])
+def get_user_comments(id):
     db = get_db()
-    cursor = db.cursor(dictionary=True)
-    # category comes from the event_category_map join table
-    cursor.execute('''SELECT r.registration_id, e.event_id, e.title,
-                             CAST(e.date AS CHAR) AS date,
-                             CAST(e.start_time AS CHAR) AS start_time,
-                             CAST(e.end_time AS CHAR) AS end_time,
-                             e.status AS event_status, r.status,
-                             r.registered_at,
-                             (SELECT ec.category_name
-                              FROM event_category_map ecm
-                              JOIN event_categories ec
-                                ON ecm.category_id = ec.category_id
-                              WHERE ecm.event_id = e.event_id
-                              LIMIT 1) AS category_name
-                      FROM registration r
-                      JOIN events e ON r.event_id = e.event_id
-                      WHERE r.user_id = %s
-                      ORDER BY e.date, e.start_time''', (id,))
-    return jsonify(cursor.fetchall()), 200
+    cursor = db.cursor()
+    cursor.execute('''SELECT c.comment_id, c.event_id, c.comment_text, 
+                      c.status, c.created_at
+                      FROM comments c
+                      WHERE c.user_id = %s
+                      ORDER BY c.created_at DESC''', (id,))
+    rows = cursor.fetchall()
+    return jsonify(rows), 200
 
-
+# create a new comment for an event
 @engagement.route('/events/<int:id>/registration', methods=['GET'])
 def get_event_registrations(id):
     # roster for a single event (used by the coordinator attendance page)
