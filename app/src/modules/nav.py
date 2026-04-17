@@ -130,6 +130,11 @@ def logs_nav():
         "pages/24_Logs.py", label="Logs", icon="📝"
     )
 
+def user_management_nav():
+    st.sidebar.page_link(
+        "pages/25_Admin_User_Management.py", label="User Management", icon="✏️"
+    )
+
 # ---- Role: data analyst ----------------------------------------------------
 
 
@@ -173,6 +178,7 @@ def SideBarLinks(show_home=False):
             system_status_nav()
             backups_nav()
             logs_nav()
+            user_management_nav()
         if st.session_state["role"] == "student":
             student_home_nav()
             browse_events_nav()
