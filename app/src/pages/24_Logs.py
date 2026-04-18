@@ -1,3 +1,4 @@
+import os
 import logging
 logger = logging.getLogger(__name__)
 
@@ -12,50 +13,80 @@ SideBarLinks()
 st.title("System Logs")
 st.caption("Monitor system events, user activity, warnings, and errors.")
 
-top1, top2, top3 = st.columns(3)
+API = os.environ.get("WEB_API_URL", "http://localhost:4000")
 
-with top1:
-    st.write("##### Total Logs")
-    st.write("### 128")
-    st.caption("Last 7 days")
+# filters
+col1, col2, col3 = st.columns(3)
 
-with top2:
-    st.write("##### Errors")
-    st.write("### 12")
-    st.error("3 new today")
+with col1:
+    user_filter = st.text_input("User ID (optional)")
 
-with top3:
-    st.write("##### Warnings")
-    st.write("### 27")
-    st.warning("5 require review")
+with col2:
+    action_filter = st.selectbox(
+        "Action Type",
+        ["", "create_event", "update_event", "send_notification", "view_dashboard", "backup_check", "role_review"]
+    )
 
-st.markdown("")
+with col3:
+    limit = st.slider("Limit logs", 10, 100, 20)
 
-st.markdown("### Recent Logs")
+params = {}
 
-log_data = [
-    ("Apr 16, 2026", "10:15 AM", "INFO", "Backup Service", "Backup completed"),
-    ("Apr 16, 2026", "9:42 AM", "WARNING", "Auth Service", "Multiple failed logins"),
-    ("Apr 16, 2026", "8:03 AM", "ERROR", "Database", "Connection timeout"),
-    ("Apr 15, 2026", "10:14 PM", "INFO", "Event Manager", "Event updated"),
-    ("Apr 15, 2026", "6:27 PM", "ERROR", "Storage", "Low disk space"),
-]
+if user_filter:
+    params["user_id"] = user_filter
 
-st.table(
-    {
-        "Date": [row[0] for row in log_data],
-        "Time": [row[1] for row in log_data],
-        "Level": [row[2] for row in log_data],
-        "Service": [row[3] for row in log_data],
-        "Action": [row[4] for row in log_data],
-    }
-)
+if action_filter:
+    params["action_type"] = action_filter
 
-st.markdown("")
+params["limit"] = limit
+
+try:
+    logs = requests.get(f"{API}/logs", params=params, timeout=5).json()
+except:
+    logs = []
+
+st.markdown("### Activity Feed")
+
+with st.container(border=True):
+
+    c1, c2, c3 = st.columns([2, 2, 6])
+
+    c1.markdown("**USER**")
+    c2.markdown("**TYPE**")
+    c3.markdown("**DESCRIPTION**")
+
+    st.divider()
+
+    for log in logs:
+
+        c1, c2, c3 = st.columns([2, 2, 6])
+
+        with c1:
+            st.write(f"user {log.get('user_id', 'system')}")
+
+        with c2:
+            t = log.get("action_type", "info")
+
+            if "error" in t:
+                st.error(t)
+            elif "warning" in t:
+                st.warning(t)
+            else:
+                st.info(t)
+
+        with c3:
+            st.write(log.get("description", ""))
+
+        st.divider()
 
 st.download_button(
     label="Export Logs",
-    data="Sample log export",
+    data="\n".join(
+        [
+            f"{l.get('user_id')} | {l.get('action_type')} | {l.get('description')}"
+            for l in logs
+        ]
+    ),
     file_name="system_logs.txt",
     mime="text/plain"
 )
