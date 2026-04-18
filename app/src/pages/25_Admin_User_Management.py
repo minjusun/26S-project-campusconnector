@@ -44,8 +44,6 @@ except requests.exceptions.RequestException:
 st.markdown("### Current Users")
 
 
-st.subheader("Current Users")
-
 search_term = st.text_input(
     "Search users",
     placeholder="Search by user ID, name, email, role, or status"
