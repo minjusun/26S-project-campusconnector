@@ -55,7 +55,7 @@ def get_logs():
     action_type = request.args.get("action_type")
     limit = request.args.get("limit")
 
-    # base query (ONLY real columns in your table)
+    # base query
     query = '''
         SELECT user_id, action_type, description
         FROM logs
@@ -94,3 +94,17 @@ def create_log():
                    (data['user_id'], data['action_type'], data['description']))
     db.commit()
     return jsonify({'message': 'Log created'}), 201
+
+@backlogs.route('/backups', methods=['GET'])
+def get_backups():
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT user_id, status
+        FROM backups
+        ORDER BY user_id DESC
+    """)
+
+    rows = cursor.fetchall()
+    return jsonify(rows), 200
