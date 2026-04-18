@@ -8,12 +8,22 @@ users = Blueprint('users', __name__)
 def get_users():
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute('''SELECT user_id, role_id, first_name, last_name, email,
-                             status, created_at
-                      FROM users
-                      ORDER BY user_id''')
-    rows = cursor.fetchall()
-    return jsonify(rows), 200
+
+    recent = request.args.get('recent')
+    query = '''
+        SELECT user_id, role_id, first_name, last_name, email,
+               status, created_at
+        FROM users
+        WHERE 1=1
+    '''
+
+    if recent and recent.lower() in ('true', '1', 'yes'):
+        query += ' AND created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)'
+
+    query += ' ORDER BY user_id'
+
+    cursor.execute(query)
+    return jsonify(cursor.fetchall()), 200
 
 # get a single user by ID
 @users.route('/users/<int:id>', methods=['GET'])
