@@ -43,19 +43,43 @@ except requests.exceptions.RequestException:
 
 st.markdown("### Current Users")
 
-st.table({
-    "User ID": [u["user_id"] for u in users],
-    "Name": [u["first_name"] + " " + u["last_name"] for u in users],
-    "Email": [u["email"] for u in users],
-    "Role": [u["role_id"] for u in users],
-    "Status": [u["status"] for u in users],
-})
 
-st.markdown("")
+st.subheader("Current Users")
+
+search_term = st.text_input(
+    "Search users",
+    placeholder="Search by user ID, name, email, role, or status"
+)
+
+formatted_users = [
+    {
+        "User ID": user.get("user_id", ""),
+        "Name": f"{user.get('first_name', '')} {user.get('last_name', '')}".strip(),
+        "Email": user.get("email", ""),
+        "Role": user.get("role_id", ""),
+        "Status": user.get("status", "")
+    }
+    for user in users
+]
+
+if search_term:
+    q = search_term.lower().strip()
+    filtered_users = [
+        user for user in formatted_users
+        if q in str(user["User ID"]).lower()
+        or q in user["Name"].lower()
+        or q in str(user["Email"]).lower()
+        or q in str(user["Role"]).lower()
+        or q in str(user["Status"]).lower()
+    ]
+else:
+    filtered_users = formatted_users
+
+st.dataframe(filtered_users, use_container_width=True, hide_index=True)
+
 
 col1, col2, col3 = st.columns(3)
 
-# ---- CREATE USER ----
 with col1:
     st.markdown("### Create User")
 
