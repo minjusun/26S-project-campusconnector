@@ -81,34 +81,45 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("### Create User")
 
+    first_name = st.text_input("First Name", key="create_first")
+    last_name = st.text_input("Last Name", key="create_last")
     new_email = st.text_input("Email", key="create_email")
     new_role = st.selectbox("Role", [1, 2, 3, 4], key="create_role")
 
     if st.button("Create"):
-        payload = {
-            "first_name": "New",
-            "last_name": "User",
-            "email": new_email,
-            "role_id": new_role,
-            "password_hash": "demo"
-        }
+        if not first_name.strip() or not last_name.strip():
+            st.error("First and Last Name are required")
+        elif not new_email.strip():
+            st.error("Email is required")
+        else:
+            payload = {
+                "first_name": first_name.strip(),
+                "last_name": last_name.strip(),
+                "email": new_email.strip(),
+                "role_id": new_role,
+                "password_hash": "demo"
+            }
 
-        try:
-            res = requests.post(f"{API}/users", json=payload)
-            st.success("User created")
-        except:
-            st.error("Failed to create user")
+            try:
+                res = requests.post(f"{API}/users", json=payload)
+                st.success("User created")
+            except:
+                st.error("Failed to create user")
+
+    if st.button("Refresh Users"):
+        st.rerun()
 
 with col2:
     st.markdown("### Update User")
 
     update_id = st.number_input("User ID", step=1, key="update_id")
     update_email = st.text_input("New Email", key="update_email")
+    update_role = st.selectbox("New Role", [1, 2, 3, 4], key="update_role")
 
     if st.button("Update"):
         payload = {
             "email": update_email,
-            "role_id": 1,
+            "role_id": update_role,
             "status": "active"
         }
 
@@ -131,4 +142,3 @@ with col3:
         except:
             st.error("Delete failed")
 
-st.button("Refresh Users")
