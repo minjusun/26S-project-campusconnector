@@ -31,7 +31,13 @@ INSERT INTO users (role_id, first_name, last_name, email, password_hash) VALUES
     (1, 'Griz', 'Nendick', 'griz.nendick@northeastern.edu', 'x'),
     (1, 'Zaria', 'Garralts', 'zaria.garralts@northeastern.edu', 'x'),
     (1, 'Carr', 'Dockerty', 'carr.dockerty@northeastern.edu', 'x'),
-    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x');
+    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x')
+    (2, 'Naomi', 'Park', 'naomi.park@northeastern.edu', 'x'),
+    (1, 'Ethan', 'Cho', 'ethan.cho@northeastern.edu', 'x'),
+    (1, 'Mina', 'Lee', 'mina.lee@northeastern.edu', 'x'),
+    (2, 'Kevin', 'Tran', 'kevin.tran@northeastern.edu', 'x'),
+    (1, 'Sofia', 'Kim', 'sofia.kim@northeastern.edu', 'x'),
+    (1, 'Daniel', 'Wu', 'daniel.wu@northeastern.edu', 'x');
 
 -- categories students can filter by
 INSERT INTO event_categories (category_name) VALUES
@@ -95,7 +101,12 @@ INSERT INTO events (location_id, title, date, start_time, end_time, status, imag
 (10, 'Basketball 3v3 Tournament', '2026-05-25', '10:00:00', '16:00:00', 'upcoming', NULL, 'Join a competitive 3v3 basketball tournament open to all students.'),
 (11, 'UX/UI Design Workshop', '2026-05-21', '13:00:00', '16:00:00', 'upcoming', NULL, 'Learn the fundamentals of user experience and interface design.'),
 (15, 'Volunteer Community Service Day', '2026-05-30', '09:00:00', '13:00:00', 'upcoming', NULL, 'Give back to the community through organized volunteer activities.'),
-(18, 'Esports Tournament Finals', '2026-06-05', '17:00:00', '20:00:00', 'upcoming', NULL, 'Watch top student teams compete in the final round of the esports tournament.');
+(18, 'Esports Tournament Finals', '2026-06-05', '17:00:00', '20:00:00', 'upcoming', NULL, 'Watch top student teams compete in the final round of the esports tournament.')
+(3, 'Public Speaking Workshop', '2026-06-09', '15:00', '17:00', 'upcoming', NULL, 'Build confidence and presentation skills through interactive speaking exercises.'),
+(9, 'International Student Mixer', '2026-06-12', '18:00', '20:30', 'upcoming', NULL, 'Meet students from around the world in a casual social setting with music and snacks.'),
+(11, 'Volleyball Open Gym', '2026-06-14', '16:00', '19:00', 'upcoming', NULL, 'Join an open gym volleyball session for all skill levels.'),
+(13, 'Women in Business Panel', '2026-06-18', '14:00', '16:00', 'upcoming', NULL, 'Hear from professionals and alumni about career growth and leadership in business.'),
+(7, 'Photography Walk Around Boston', '2026-06-22', '10:00', '13:00', 'upcoming', NULL, 'Explore Boston while practicing photography techniques with fellow students.');
 
 -- link each event to a category through the join table
 INSERT INTO event_category_map (event_id, category_id) VALUES
@@ -172,7 +183,22 @@ INSERT INTO event_category_map (event_id, category_id) VALUES
     (24, 3), (24, 10), (24, 6), (24, 1), (24, 11),
 
     -- 25 Esports Tournament Finals
-    (25, 9), (25, 8), (25, 3), (25, 4), (25, 6), (25, 10);
+    (25, 9), (25, 8), (25, 3), (25, 4), (25, 6), (25, 10)
+    
+    -- 26 Public Speaking Workshop
+    (26, 11), (26, 1), (26, 3),
+
+    -- 27 International Student Mixer
+    (27, 3), (27, 10), (27, 6),
+
+    -- 28 Volleyball Open Gym
+    (28, 4), (28, 3), (28, 7),
+
+    -- 29 Women in Business Panel
+    (29, 2), (29, 6), (29, 1),
+
+    -- 30 Photography Walk Around Boston
+    (30, 5), (30, 3), (30, 10);
 
 -- a couple of registrations so "My Events" isn't empty for user 1
 INSERT INTO registration (event_id, user_id, status) VALUES
@@ -322,7 +348,23 @@ INSERT INTO attendance (user_id, event_id, attendance_status) VALUES
     (21, 12, 'checked_in'),
     (24, 13, 'checked_in'),
     (1, 14, 'checked_in'),
-    (2, 15, 'checked_in');
+    (2, 15, 'checked_in')
+    
+    (25, 26, 'checked_in'),
+    (26, 27, 'checked_in'),
+    (27, 28, 'checked_in'),
+    (28, 29, 'checked_in'),
+    (29, 30, 'checked_in'),
+    (30, 26, 'checked_in'),
+    (25, 27, 'checked_in'),
+    (26, 28, 'checked_in'),
+    (27, 29, 'checked_in'),
+    (28, 30, 'checked_in'),
+    (29, 26, 'checked_in'),
+    (30, 27, 'checked_in'),
+    (25, 28, 'checked_in'),
+    (26, 29, 'checked_in'),
+    (27, 30, 'checked_in');
 
 INSERT INTO waitlist (event_id, user_id, queued_pos, status) VALUES
     (5, 2, 1, 'waiting'),
@@ -342,7 +384,17 @@ INSERT INTO waitlist (event_id, user_id, queued_pos, status) VALUES
     (18, 12, 1, 'expired'),
     (19, 15, 1, 'waiting'),
     (20, 18, 1, 'waiting'),
-    (21, 21, 1, 'promoted');
+    (21, 21, 1, 'promoted')
+    (26, 28, 1, 'waiting'),
+    (26, 29, 2, 'waiting'),
+    (27, 30, 1, 'promoted'),
+    (27, 25, 2, 'waiting'),
+    (28, 26, 1, 'waiting'),
+    (28, 27, 2, 'expired'),
+    (29, 30, 1, 'waiting'),
+    (29, 25, 2, 'promoted'),
+    (30, 26, 1, 'waiting'),
+    (30, 27, 2, 'waiting');
 
 
 INSERT INTO event_views (event_id, user_id) VALUES
@@ -421,7 +473,26 @@ INSERT INTO comments (user_id, event_id, comment_text, status) VALUES
     (21, 22, 'Can teams sign up on the day of the tournament?', 'visible'),
     (24, 23, 'UI/UX is such a useful skill to learn.', 'visible'),
     (1, 24, 'Happy to see community service opportunities included.', 'visible'),
-    (2, 25, 'This final is going to be intense.', 'visible');
+    (2, 25, 'This final is going to be intense.', 'visible')
+    (25, 26, 'This workshop sounds really useful.', 'visible'),
+    (26, 26, 'Will there be time for practice speeches?', 'visible'),
+    (27, 27, 'This sounds like a great way to meet new people.', 'visible'),
+    (28, 27, 'Are snacks provided at the mixer?', 'visible'),
+    (29, 28, 'Can beginners join the open gym?', 'visible'),
+    (30, 28, 'Looking forward to this event.', 'visible'),
+    (25, 29, 'Excited to hear from the panelists.', 'visible'),
+    (26, 29, 'Will alumni be there for networking after?', 'visible'),
+    (27, 30, 'This event sounds really creative.', 'visible'),
+    (28, 30, 'Do we need to bring our own camera?', 'visible'),
+    (29, 26, 'I need this before my next class presentation.', 'visible'),
+    (30, 27, 'Love that the app includes events like this.', 'visible'),
+    (25, 28, 'Hope there is enough space for everyone.', 'visible'),
+    (26, 29, 'This is exactly the kind of event I was looking for.', 'visible'),
+    (27, 30, 'Boston is a great place for a photo walk.', 'visible'),
+    (28, 26, 'Can non-native English speakers join too?', 'visible'),
+    (29, 27, 'This should be a fun social event.', 'visible'),
+    (30, 28, 'Would be great if teams rotate often.', 'visible'),
+    (25, 29, 'Really glad to see more business events on here.', 'visible');
 
 INSERT INTO event_history (user_id, event_id, feedback_rating) VALUES
     (6, 4, 4),
@@ -453,7 +524,27 @@ INSERT INTO event_history (user_id, event_id, feedback_rating) VALUES
     (24, 18, 5),
     (1, 20, 4),
     (2, 21, 5),
-    (6, 22, 4);
+    (6, 22, 4)
+    (25, 26, 5),
+    (26, 27, 4),
+    (27, 28, 4),
+    (28, 29, 5),
+    (29, 30, 5),
+    (30, 26, 4),
+    (25, 27, 5),
+    (26, 28, 4),
+    (27, 29, 5),
+    (28, 30, 4),
+    (29, 26, 4),
+    (30, 27, 5),
+    (25, 28, 3),
+    (26, 29, 5),
+    (27, 30, 4),
+    (28, 26, 5),
+    (29, 27, 4),
+    (30, 28, 4),
+    (25, 29, 5),
+    (26, 30, 4);
 
 INSERT INTO logs (user_id, action_type, description) VALUES
     (3, 'update_event', 'Updated event details for Student Film Screening'),
@@ -475,13 +566,38 @@ INSERT INTO logs (user_id, action_type, description) VALUES
     (3, 'create_event', 'Created Basketball 3v3 Tournament'),
     (3, 'create_event', 'Created UX/UI Design Workshop'),
     (3, 'create_event', 'Created Volunteer Community Service Day'),
-    (3, 'create_event', 'Created Esports Tournament Finals');
+    (3, 'create_event', 'Created Esports Tournament Finals')
+    (3, 'create_event', 'Created Public Speaking Workshop'),
+    (3, 'create_event', 'Created International Student Mixer'),
+    (3, 'create_event', 'Created Volleyball Open Gym'),
+    (3, 'create_event', 'Created Women in Business Panel'),
+    (3, 'create_event', 'Created Photography Walk Around Boston'),
+    (4, 'view_dashboard', 'Reviewed dashboard metrics for upcoming events'),
+    (3, 'send_notification', 'Sent reminder for Public Speaking Workshop'),
+    (3, 'send_notification', 'Sent reminder for International Student Mixer'),
+    (3, 'update_event', 'Updated description for Women in Business Panel'),
+    (4, 'backup_check', 'Confirmed latest backup completed successfully'),
+    (3, 'update_event', 'Adjusted time for Volleyball Open Gym'),
+    (4, 'view_logs', 'Reviewed application activity log'),
+    (3, 'send_notification', 'Sent reminder for Photography Walk Around Boston'),
+    (4, 'role_review', 'Reviewed permissions for event coordinators'),
+    (3, 'update_event', 'Updated venue details for International Student Mixer');
 
 INSERT INTO backups (user_id, status) VALUES
     (4, 'completed'),
     (4, 'completed'),
     (4, 'completed'),
     (4, 'failed'),
+    (4, 'completed'),
+    (4, 'in_progress'),
+    (4, 'completed'),
+    (4, 'completed'),
+    (4, 'failed')
+    (4, 'completed'),
+    (4, 'completed'),
+    (4, 'completed'),
+    (4, 'failed'),
+    (4, 'completed'),
     (4, 'completed'),
     (4, 'in_progress'),
     (4, 'completed'),
