@@ -14,12 +14,10 @@ showSidebarNavigation = false
 
 [theme]
 # Setting some basic config options related to the theme of the app
-base="light"
+base="dark"
 primaryColor="#6550e6"
 font="monospace"
 
 [server]
 runOnSave = true
-
-[server]
 enableStaticServing = true

@@ -116,7 +116,7 @@ def user_management_nav():
     st.sidebar.page_link(
         "pages/25_Admin_User_Management.py", label="User Management", icon="✏️"
     )
-    
+
 # ---- Sidebar assembly -------------------------------------------------------
 
 def SideBarLinks(show_home=False):
@@ -126,7 +126,7 @@ def SideBarLinks(show_home=False):
     """
 
     # Logo appears at the top of the sidebar on every page
-    st.sidebar.image("/app/static/Campus_Connector_Logo.png", width=150)
+    st.sidebar.image("static/Campus_Connector_Logo.png", width=500)
 
     # If no one is logged in, send them to the Home (login) page
     if "authenticated" not in st.session_state:
