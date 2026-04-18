@@ -50,11 +50,38 @@ def delete_notification(id):
 def get_logs():
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    cursor.execute('''SELECT log_id, user_id, action_type, description, created_at 
-                      FROM logs 
-                      ORDER BY created_at DESC''')
-    rows = cursor.fetchall()
-    return jsonify(rows), 200
+
+    user_id = request.args.get("user_id")
+    action_type = request.args.get("action_type")
+    limit = request.args.get("limit")
+
+    # base query (ONLY real columns in your table)
+    query = '''
+        SELECT user_id, action_type, description
+        FROM logs
+        WHERE 1=1
+    '''
+    params = []
+
+    # filter by user (optional)
+    if user_id:
+        query += " AND user_id = %s"
+        params.append(user_id)
+
+    # filter by action type (optional)
+    if action_type:
+        query += " AND action_type = %s"
+        params.append(action_type)
+
+    query += " ORDER BY user_id DESC"
+
+    # limit results (optional)
+    if limit:
+        query += " LIMIT %s"
+        params.append(int(limit))
+
+    cursor.execute(query, params)
+    return jsonify(cursor.fetchall()), 200
 
 # Create a new log entry
 @backlogs.route('/logs', methods=['POST'])
