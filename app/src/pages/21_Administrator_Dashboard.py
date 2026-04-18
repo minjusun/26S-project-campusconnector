@@ -1,3 +1,4 @@
+import os
 import logging
 logger = logging.getLogger(__name__)
 
@@ -9,29 +10,77 @@ st.set_page_config(layout='wide')
 
 SideBarLinks()
 
+API = os.environ.get("WEB_API_URL", "http://localhost:4000")
+
+# api calls
+try:
+    users_res = requests.get(f"{API}/users", timeout=5)
+    users = users_res.json() if users_res.ok else []
+
+    new_users_res = requests.get(f"{API}/users", params={"recent": "true"}, timeout=5)
+    new_users = new_users_res.json() if new_users_res.ok else []
+
+    events_res = requests.get(f"{API}/events", params={"upcoming": "true"}, timeout=5)
+    events = events_res.json() if events_res.ok else []
+
+    pending_res = requests.get(f"{API}/events", params={"status": "pending"}, timeout=5)
+    pending_events = pending_res.json() if pending_res.ok else []
+
+    logs_res = requests.get(f"{API}/logs", timeout=5)
+    logs = logs_res.json() if logs_res.ok else []
+
+except requests.exceptions.RequestException:
+    st.error("API failed")
+    users, new_users, events, pending_events, logs = [], [], [], [], []
+
+# date filter
+today = date.today()
+week_ahead = today + timedelta(days=7)
+
+events_this_week = []
+for e in events:
+    try:
+        d = date.fromisoformat(e["date"])
+        if today <= d <= week_ahead:
+            events_this_week.append(e)
+    except:
+        continue
+
+# system check
+system_ok = isinstance(users, list) and isinstance(events, list) and isinstance(logs, list)
+
+
 st.title('Administrator Dashboard')
 
 top1, top2, top3, top4 = st.columns(4)
 
 with top1:
     st.write("##### Registered Users")
-    st.write("### 1,284")
-    st.caption("42 new this week")
+    st.write(f"### {len(users)}")
+    st.caption(f"{len(new_users)} new this week")
 
 with top2:
     st.write("##### Upcoming Events")
-    st.write("### 42")
-    st.caption("8 this week")
+    st.write(f"### {len(events)}")
+    st.caption(f"{len(events_this_week)} this week")
 
 with top3:
     st.write("##### Pending Approvals")
-    st.write("### 6")
-    st.caption("0 urgent")
+    st.write(f"### {len(pending_events)}")
+
+    if pending_events:
+        st.warning("needs review")
+    else:
+        st.success("all clear")
 
 with top4:
     st.write("##### System Status")
-    st.write("### Healthy")
-    st.success("All services operational")
+    st.write("### Healthy" if system_ok else "### Degraded")
+
+    if system_ok:
+        st.success("all services operational")
+    else:
+        st.error("service issue detected")
 
 st.markdown("")
 left_col, right_col = st.columns([2.2, 1])
@@ -41,10 +90,10 @@ with left_col:
         st.markdown("### System Overview")
 
         items = [
-            ("Database integrity", "Last run: 2 hours ago", "ok"),
-            ("Backup status", "Last completed: today 2:00 PM", "ok"),
-            ("Storage capacity", "65 GB used", "warning"),
-            ("Network connectivity", "Last checked: 5 min ago", "ok"),
+            ("Users loaded", f"{len(users)} records", "ok"),
+            ("Events loaded", f"{len(events)} records", "ok"),
+            ("Pending approvals", f"{len(pending_events)} items", "warning" if pending_events else "ok"),
+            ("Logs loaded", f"{len(logs)} entries", "ok"),
         ]
 
         for title, subtitle, status in items:
@@ -78,17 +127,10 @@ with st.container(border=True):
     h3.markdown("**TIME**")
     st.divider()
 
-    activity = [
-        ("Approved event: Spring Career Mixer", "Admin", "10 min ago"),
-        ("Backup completed successfully", "System", "1 hour ago"),
-        ("Storage warning triggered", "System", "2 hours ago"),
-        ("Role updated for user 104", "Admin", "Today"),
-    ]
-
-    for action, user, time in activity:
+    for log in logs[:10]:
         c1, c2, c3 = st.columns([3, 2, 2])
-        c1.write(action)
-        c2.write(user)
-        c3.write(time)
+        c1.write(log.get("description", "no description"))
+        c2.write(f"user {log.get('user_id', 'system')}")
+        c3.write(log.get("created_at", "—"))
         st.divider()
         
