@@ -16,7 +16,7 @@ API = os.environ.get("WEB_API_URL", "http://localhost:4000")
 
 st.markdown("### Run Backup")
 
-if st.button("Start Backup", type="primary", use_container_width=True):
+if st.button("Run Backup", type="primary", use_container_width=True):
     try:
         res = requests.post(
             f"{API}/backups",
@@ -24,14 +24,18 @@ if st.button("Start Backup", type="primary", use_container_width=True):
             timeout=5
         )
 
+        # DEBUG
+        st.write("Status code:", res.status_code)
+        st.write("Response:", res.text)
+
         if res.status_code == 201:
-            st.success("Backup started successfully")
+            st.success(res.json().get("message", "Backup started successfully"))
             st.rerun()
         else:
-            st.error("Failed to start backup")
+            st.error(f"Failed to start backup: {res.text}")
 
-    except:
-        st.error("API request failed")
+    except Exception as e:
+        st.error(f"API request failed: {str(e)}")
 
 # pull backup data
 try:
