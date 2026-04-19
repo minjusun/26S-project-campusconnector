@@ -348,7 +348,7 @@ INSERT INTO attendance (user_id, event_id, attendance_status) VALUES
     (21, 12, 'checked_in'),
     (24, 13, 'checked_in'),
     (1, 14, 'checked_in'),
-    (2, 15, 'checked_in')
+    (2, 15, 'checked_in'),
     
     (25, 26, 'checked_in'),
     (26, 27, 'checked_in'),
