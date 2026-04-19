@@ -384,7 +384,7 @@ INSERT INTO waitlist (event_id, user_id, queued_pos, status) VALUES
     (18, 12, 1, 'expired'),
     (19, 15, 1, 'waiting'),
     (20, 18, 1, 'waiting'),
-    (21, 21, 1, 'promoted')
+    (21, 21, 1, 'promoted'),
     (26, 28, 1, 'waiting'),
     (26, 29, 2, 'waiting'),
     (27, 30, 1, 'promoted'),
@@ -473,7 +473,7 @@ INSERT INTO comments (user_id, event_id, comment_text, status) VALUES
     (21, 22, 'Can teams sign up on the day of the tournament?', 'visible'),
     (24, 23, 'UI/UX is such a useful skill to learn.', 'visible'),
     (1, 24, 'Happy to see community service opportunities included.', 'visible'),
-    (2, 25, 'This final is going to be intense.', 'visible')
+    (2, 25, 'This final is going to be intense.', 'visible'),
     (25, 26, 'This workshop sounds really useful.', 'visible'),
     (26, 26, 'Will there be time for practice speeches?', 'visible'),
     (27, 27, 'This sounds like a great way to meet new people.', 'visible'),
@@ -566,7 +566,7 @@ INSERT INTO logs (user_id, action_type, description) VALUES
     (3, 'create_event', 'Created Basketball 3v3 Tournament'),
     (3, 'create_event', 'Created UX/UI Design Workshop'),
     (3, 'create_event', 'Created Volunteer Community Service Day'),
-    (3, 'create_event', 'Created Esports Tournament Finals')
+    (3, 'create_event', 'Created Esports Tournament Finals'),
     (3, 'create_event', 'Created Public Speaking Workshop'),
     (3, 'create_event', 'Created International Student Mixer'),
     (3, 'create_event', 'Created Volleyball Open Gym'),
@@ -592,7 +592,7 @@ INSERT INTO backups (user_id, status) VALUES
     (4, 'in_progress'),
     (4, 'completed'),
     (4, 'completed'),
-    (4, 'failed')
+    (4, 'failed'),
     (4, 'completed'),
     (4, 'completed'),
     (4, 'completed'),
