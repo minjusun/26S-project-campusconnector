@@ -31,7 +31,7 @@ INSERT INTO users (role_id, first_name, last_name, email, password_hash) VALUES
     (1, 'Griz', 'Nendick', 'griz.nendick@northeastern.edu', 'x'),
     (1, 'Zaria', 'Garralts', 'zaria.garralts@northeastern.edu', 'x'),
     (1, 'Carr', 'Dockerty', 'carr.dockerty@northeastern.edu', 'x'),
-    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x')
+    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x'),
     (2, 'Naomi', 'Park', 'naomi.park@northeastern.edu', 'x'),
     (1, 'Ethan', 'Cho', 'ethan.cho@northeastern.edu', 'x'),
     (1, 'Mina', 'Lee', 'mina.lee@northeastern.edu', 'x'),
@@ -101,7 +101,7 @@ INSERT INTO events (location_id, title, date, start_time, end_time, status, imag
 (10, 'Basketball 3v3 Tournament', '2026-05-25', '10:00:00', '16:00:00', 'upcoming', NULL, 'Join a competitive 3v3 basketball tournament open to all students.'),
 (11, 'UX/UI Design Workshop', '2026-05-21', '13:00:00', '16:00:00', 'upcoming', NULL, 'Learn the fundamentals of user experience and interface design.'),
 (15, 'Volunteer Community Service Day', '2026-05-30', '09:00:00', '13:00:00', 'upcoming', NULL, 'Give back to the community through organized volunteer activities.'),
-(18, 'Esports Tournament Finals', '2026-06-05', '17:00:00', '20:00:00', 'upcoming', NULL, 'Watch top student teams compete in the final round of the esports tournament.')
+(18, 'Esports Tournament Finals', '2026-06-05', '17:00:00', '20:00:00', 'upcoming', NULL, 'Watch top student teams compete in the final round of the esports tournament.'),
 (3, 'Public Speaking Workshop', '2026-06-09', '15:00', '17:00', 'upcoming', NULL, 'Build confidence and presentation skills through interactive speaking exercises.'),
 (9, 'International Student Mixer', '2026-06-12', '18:00', '20:30', 'upcoming', NULL, 'Meet students from around the world in a casual social setting with music and snacks.'),
 (11, 'Volleyball Open Gym', '2026-06-14', '16:00', '19:00', 'upcoming', NULL, 'Join an open gym volleyball session for all skill levels.'),
@@ -183,7 +183,7 @@ INSERT INTO event_category_map (event_id, category_id) VALUES
     (24, 3), (24, 10), (24, 6), (24, 1), (24, 11),
 
     -- 25 Esports Tournament Finals
-    (25, 9), (25, 8), (25, 3), (25, 4), (25, 6), (25, 10)
+    (25, 9), (25, 8), (25, 3), (25, 4), (25, 6), (25, 10),
     
     -- 26 Public Speaking Workshop
     (26, 11), (26, 1), (26, 3),
@@ -348,7 +348,7 @@ INSERT INTO attendance (user_id, event_id, attendance_status) VALUES
     (21, 12, 'checked_in'),
     (24, 13, 'checked_in'),
     (1, 14, 'checked_in'),
-    (2, 15, 'checked_in')
+    (2, 15, 'checked_in'),
     
     (25, 26, 'checked_in'),
     (26, 27, 'checked_in'),
@@ -384,7 +384,7 @@ INSERT INTO waitlist (event_id, user_id, queued_pos, status) VALUES
     (18, 12, 1, 'expired'),
     (19, 15, 1, 'waiting'),
     (20, 18, 1, 'waiting'),
-    (21, 21, 1, 'promoted')
+    (21, 21, 1, 'promoted'),
     (26, 28, 1, 'waiting'),
     (26, 29, 2, 'waiting'),
     (27, 30, 1, 'promoted'),
@@ -473,7 +473,7 @@ INSERT INTO comments (user_id, event_id, comment_text, status) VALUES
     (21, 22, 'Can teams sign up on the day of the tournament?', 'visible'),
     (24, 23, 'UI/UX is such a useful skill to learn.', 'visible'),
     (1, 24, 'Happy to see community service opportunities included.', 'visible'),
-    (2, 25, 'This final is going to be intense.', 'visible')
+    (2, 25, 'This final is going to be intense.', 'visible'),
     (25, 26, 'This workshop sounds really useful.', 'visible'),
     (26, 26, 'Will there be time for practice speeches?', 'visible'),
     (27, 27, 'This sounds like a great way to meet new people.', 'visible'),
@@ -524,7 +524,7 @@ INSERT INTO event_history (user_id, event_id, feedback_rating) VALUES
     (24, 18, 5),
     (1, 20, 4),
     (2, 21, 5),
-    (6, 22, 4)
+    (6, 22, 4),
     (25, 26, 5),
     (26, 27, 4),
     (27, 28, 4),
@@ -566,7 +566,7 @@ INSERT INTO logs (user_id, action_type, description) VALUES
     (3, 'create_event', 'Created Basketball 3v3 Tournament'),
     (3, 'create_event', 'Created UX/UI Design Workshop'),
     (3, 'create_event', 'Created Volunteer Community Service Day'),
-    (3, 'create_event', 'Created Esports Tournament Finals')
+    (3, 'create_event', 'Created Esports Tournament Finals'),
     (3, 'create_event', 'Created Public Speaking Workshop'),
     (3, 'create_event', 'Created International Student Mixer'),
     (3, 'create_event', 'Created Volleyball Open Gym'),
@@ -592,7 +592,7 @@ INSERT INTO backups (user_id, status) VALUES
     (4, 'in_progress'),
     (4, 'completed'),
     (4, 'completed'),
-    (4, 'failed')
+    (4, 'failed'),
     (4, 'completed'),
     (4, 'completed'),
     (4, 'completed'),

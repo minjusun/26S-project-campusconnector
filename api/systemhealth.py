@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify
 from backend.db_connection import get_db
 
-system = Blueprint('system', __name__)
+systemHealth = Blueprint('systemHealth', __name__)
 
 # user count for system load
-@system.route('/users', methods=['GET'])
+@systemHealth.route('/users', methods=['GET'])
 def users():
     db = get_db()
     cursor = db.cursor(dictionary=True)
@@ -14,7 +14,7 @@ def users():
 
 
 # event data for activity + load
-@system.route('/events', methods=['GET'])
+@systemHealth.route('/events', methods=['GET'])
 def events():
     db = get_db()
     cursor = db.cursor(dictionary=True)
@@ -24,7 +24,7 @@ def events():
 
 
 # logs for system activity feed
-@system.route('/logs', methods=['GET'])
+@systemHealth.route('/logs', methods=['GET'])
 def logs():
     db = get_db()
     cursor = db.cursor(dictionary=True)
@@ -38,7 +38,7 @@ def logs():
 
 
 # backups for system health signal
-@system.route('/backups', methods=['GET'])
+@systemHealth.route('/backups', methods=['GET'])
 def backups():
     db = get_db()
     cursor = db.cursor(dictionary=True)

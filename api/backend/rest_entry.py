@@ -6,7 +6,7 @@ from backLogs import backlogs
 from dotenv import load_dotenv
 
 from analytics import analytics
-from systemhealth import systemhealth
+from systemhealth import systemHealth
 
 import os
 import logging
@@ -54,7 +54,7 @@ def create_app():
 
     #register analytics and system health blueprints
     app.register_blueprint(analytics)
-    app.register_blueprint(systemhealth)
+    app.register_blueprint(systemHealth)
 
 
     return app
