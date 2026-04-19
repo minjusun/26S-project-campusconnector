@@ -31,7 +31,7 @@ INSERT INTO users (role_id, first_name, last_name, email, password_hash) VALUES
     (1, 'Griz', 'Nendick', 'griz.nendick@northeastern.edu', 'x'),
     (1, 'Zaria', 'Garralts', 'zaria.garralts@northeastern.edu', 'x'),
     (1, 'Carr', 'Dockerty', 'carr.dockerty@northeastern.edu', 'x'),
-    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x')
+    (1, 'Hugh', 'Heibl', 'hugh.heibl@northeastern.edu', 'x'),
     (2, 'Naomi', 'Park', 'naomi.park@northeastern.edu', 'x'),
     (1, 'Ethan', 'Cho', 'ethan.cho@northeastern.edu', 'x'),
     (1, 'Mina', 'Lee', 'mina.lee@northeastern.edu', 'x'),
