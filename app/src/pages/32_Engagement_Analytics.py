@@ -1,3 +1,4 @@
+import os
 import logging
 
 logger = logging.getLogger(__name__)
@@ -11,103 +12,92 @@ st.set_page_config(layout="wide")
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
 
+API = os.environ.get("WEB_API_URL", "http://localhost:4000")
+
+# fetch analytics data
+try:
+    perf_res = requests.get(f"{API}/analytics/event-performance-detailed", timeout=5)
+    perf = perf_res.json() if perf_res.ok else {}
+
+    insight_res = requests.get(f"{API}/analytics/insights", timeout=5)
+    insights = insight_res.json() if insight_res.ok else {}
+
+except Exception:
+    perf, insights = {}, {}
+
 st.title("Event Analytics")
 st.caption("Understand trends in attendance, engagement, and student behavior across events.")
 
 top1, top2, top3 = st.columns(3)
 
 with top1:
-    st.write("##### Total Attendance (This Month)")
-    st.write("### 810")
+    st.write("##### Total Attendance (Avg Rate)")
+    st.write(f"### {perf.get('avg_attendance_rate', 0):.2f}")
     st.caption("Across all events")
 
 with top2:
-    st.write("##### Repeat Attendance Rate")
-    st.write("### 43%")
-    st.caption("Students attending multiple events")
+    best = perf.get("best_event", {})
+    st.write("##### Best Event")
+    st.write(f"### {best.get('title', '—')}")
+    st.caption("Highest attendance rate")
 
 with top3:
+    best_cat = insights.get("best_category", {})
     st.write("##### Most Popular Category")
-    st.write("### Career")
+    st.write(f"### {best_cat.get('category', '—')}")
     st.caption("Highest average turnout")
 
 st.markdown("")
 
 st.markdown("### Attendance by Event Category")
 
-category_data = [
-    ("Career", 320),
-    ("Academic", 210),
-    ("Social", 150),
-    ("Leadership", 130),
-]
+category_data = insights.get("predictions", [])
 
-st.table(
-    {
-        "Category": [row[0] for row in category_data],
-        "Total Attendance": [row[1] for row in category_data],
-    }
-)
+st.table({
+    "Category": [c["category"] for c in category_data],
+    "Avg Attendance": [c["predicted_attendance"] for c in category_data],
+})
 
 st.markdown("")
 
-st.markdown("### Attendance by Day of Week")
+# event breakdown table
+st.markdown("### Event Performance Breakdown")
 
-day_data = [
-    ("Monday", 90),
-    ("Tuesday", 140),
-    ("Wednesday", 200),
-    ("Thursday", 220),
-    ("Friday", 100),
-    ("Weekend", 60),
-]
+events = perf.get("events", [])
 
-st.table(
-    {
-        "Day": [row[0] for row in day_data],
-        "Average Attendance": [row[1] for row in day_data],
-    }
-)
+st.table({
+    "Event": [e["title"] for e in events],
+    "Registrations": [e["registrations"] for e in events],
+    "Attendance": [e["attendance"] for e in events],
+    "Attendance Rate": [f"{e['attendance_rate']*100:.0f}%" for e in events],
+    "Comments": [e["comments"] for e in events],
+})
+
 
 st.markdown("")
 
-st.markdown("### Monthly Attendance Trends")
-
-monthly_data = [
-    ("January", 400),
-    ("February", 520),
-    ("March", 610),
-    ("April", 810),
-]
-
-st.table(
-    {
-        "Month": [row[0] for row in monthly_data],
-        "Total Attendance": [row[1] for row in monthly_data],
-    }
-)
-
-st.markdown("")
-
+# insights section
 left, right = st.columns(2)
+
+best_category = insights.get("best_category", {})
+best_day = insights.get("best_day", {})
 
 with left:
     st.markdown("### Trend Insights")
-    st.write("- Attendance is increasing month over month.")
-    st.write("- Career-focused events drive the most participation.")
-    st.write("- Midweek events (Wed–Thurs) perform best.")
+
+    if best_category and best_day:
+        st.write(f"- Most popular category is {best_category.get('category', '—')} with an average attendance of {best_category.get('predicted_attendance', 0)}.")
+        st.write(f"- Best performing day is {best_day.get('day', '—')} with an average attendance of {best_day.get('avg', 0):.2f}.")
+    else:
+        st.write("- Not enough data available to generate insights.")
+        st.write("- Event trends will appear once more events and registrations are recorded.")
 
 with right:
     st.markdown("### Recommendations")
-    st.write("- Schedule high-priority events midweek.")
-    st.write("- Increase investment in career-focused programming.")
-    st.write("- Improve promotion for weekend events.")
 
-st.markdown("")
-
-st.download_button(
-    label="Export Analytics Data",
-    data="Sample analytics export",
-    file_name="event_analytics.txt",
-    mime="text/plain"
-)
+    if best_category and best_day:
+        st.write(f"- Focus more events on {best_category.get('category', 'high-performing categories')}.")
+        st.write(f"- Schedule events on {best_day.get('day', 'midweek days')} for better turnout.")
+        st.write("- Improve promotion for lower-performing categories.")
+    else:
+        st.write("- Collect more engagement data before generating recommendations.")
