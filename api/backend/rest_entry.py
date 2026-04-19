@@ -4,6 +4,10 @@ from events import events
 from engagement import engagement
 from backLogs import backlogs
 from dotenv import load_dotenv
+
+from analytics import analytics
+from systemhealth import systemhealth
+
 import os
 import logging
 
@@ -47,6 +51,10 @@ def create_app():
     app.register_blueprint(events)
     app.register_blueprint(engagement)
     app.register_blueprint(backlogs)
+
+    #register analytics and system health blueprints
+    app.register_blueprint(analytics)
+    app.register_blueprint(systemhealth)
 
 
     return app

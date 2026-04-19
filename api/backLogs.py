@@ -109,7 +109,7 @@ def get_backups():
     rows = cursor.fetchall()
     return jsonify(rows), 200
 
-@backups.route('/backups', methods=['POST'])
+@backlogs.route('/backups', methods=['POST'])
 def create_backup():
     db = get_db()
     cursor = db.cursor()
