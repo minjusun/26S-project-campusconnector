@@ -101,7 +101,7 @@ INSERT INTO events (location_id, title, date, start_time, end_time, status, imag
 (10, 'Basketball 3v3 Tournament', '2026-05-25', '10:00:00', '16:00:00', 'upcoming', NULL, 'Join a competitive 3v3 basketball tournament open to all students.'),
 (11, 'UX/UI Design Workshop', '2026-05-21', '13:00:00', '16:00:00', 'upcoming', NULL, 'Learn the fundamentals of user experience and interface design.'),
 (15, 'Volunteer Community Service Day', '2026-05-30', '09:00:00', '13:00:00', 'upcoming', NULL, 'Give back to the community through organized volunteer activities.'),
-(18, 'Esports Tournament Finals', '2026-06-05', '17:00:00', '20:00:00', 'upcoming', NULL, 'Watch top student teams compete in the final round of the esports tournament.')
+(18, 'Esports Tournament Finals', '2026-06-05', '17:00:00', '20:00:00', 'upcoming', NULL, 'Watch top student teams compete in the final round of the esports tournament.'),
 (3, 'Public Speaking Workshop', '2026-06-09', '15:00', '17:00', 'upcoming', NULL, 'Build confidence and presentation skills through interactive speaking exercises.'),
 (9, 'International Student Mixer', '2026-06-12', '18:00', '20:30', 'upcoming', NULL, 'Meet students from around the world in a casual social setting with music and snacks.'),
 (11, 'Volleyball Open Gym', '2026-06-14', '16:00', '19:00', 'upcoming', NULL, 'Join an open gym volleyball session for all skill levels.'),
@@ -524,7 +524,7 @@ INSERT INTO event_history (user_id, event_id, feedback_rating) VALUES
     (24, 18, 5),
     (1, 20, 4),
     (2, 21, 5),
-    (6, 22, 4)
+    (6, 22, 4),
     (25, 26, 5),
     (26, 27, 4),
     (27, 28, 4),
