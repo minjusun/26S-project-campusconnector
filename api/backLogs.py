@@ -108,3 +108,27 @@ def get_backups():
 
     rows = cursor.fetchall()
     return jsonify(rows), 200
+
+@backups.route('/backups', methods=['POST'])
+def create_backup():
+    db = get_db()
+    cursor = db.cursor()
+
+    data = request.get_json(silent=True) or {}
+
+    # optional user_id (fallback to 1 if not provided)
+    user_id = data.get("user_id", 1)
+
+    cursor.execute("""
+        INSERT INTO backups (user_id, status)
+        VALUES (%s, %s)
+    """, (user_id, "in_progress"))
+
+    db.commit()
+
+    backup_id = cursor.lastrowid
+
+    return jsonify({
+        "message": "backup started",
+        "backup_id": backup_id
+    }), 201
