@@ -150,6 +150,8 @@ Campus Connector is a data-driven campus event management platform for students 
 2. Allows student coordinators to manage attendees by utilizing the event editor. In it, they can accept, deny, or waitlist applicants based on the capacity of the event serving as a security measure and providing an additional layer of control to the event managers.
 Our goal is to transform campus events from scattered and underutilized into an organized, highly engaging experience for everyone.
 
+## API
+
 
 ## Pre-requisites
 

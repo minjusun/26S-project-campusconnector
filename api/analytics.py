@@ -20,7 +20,7 @@ def event_performance_detailed():
         JOIN event_location el ON e.location_id = el.location_id
         LEFT JOIN registration r ON e.event_id = r.event_id
         LEFT JOIN comments c ON e.event_id = c.event_id
-        GROUP BY e.event_id
+        GROUP BY e.event_id, e.title, el.capacity
     ''')
 
     events = cursor.fetchall()
