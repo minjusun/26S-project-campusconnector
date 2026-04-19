@@ -183,7 +183,7 @@ INSERT INTO event_category_map (event_id, category_id) VALUES
     (24, 3), (24, 10), (24, 6), (24, 1), (24, 11),
 
     -- 25 Esports Tournament Finals
-    (25, 9), (25, 8), (25, 3), (25, 4), (25, 6), (25, 10)
+    (25, 9), (25, 8), (25, 3), (25, 4), (25, 6), (25, 10),
     
     -- 26 Public Speaking Workshop
     (26, 11), (26, 1), (26, 3),
