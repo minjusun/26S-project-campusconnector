@@ -126,9 +126,6 @@ def create_backup():
 
     db.commit()
 
-    backup_id = cursor.lastrowid
-
     return jsonify({
         "message": "backup started",
-        "backup_id": backup_id
     }), 201
