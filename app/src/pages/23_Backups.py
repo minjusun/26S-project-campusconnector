@@ -14,6 +14,25 @@ st.title('Backups Dashboard')
 
 API = os.environ.get("WEB_API_URL", "http://localhost:4000")
 
+st.markdown("### Run Backup")
+
+if st.button("Start Backup", type="primary", use_container_width=True):
+    try:
+        res = requests.post(
+            f"{API}/backups",
+            json={"user_id": st.session_state.get("user_id", 1)},
+            timeout=5
+        )
+
+        if res.status_code == 201:
+            st.success("Backup started successfully")
+            st.rerun()
+        else:
+            st.error("Failed to start backup")
+
+    except:
+        st.error("API request failed")
+
 # pull backup data
 try:
     backups = requests.get(f"{API}/backups", timeout=5).json()
