@@ -103,14 +103,20 @@ def insights():
     best_day = None
 
     for e in events:
-        dt = datetime.fromisoformat(e["date"])
-        day = dt.strftime("%A")
+    dt_val = e["date"]
 
-        if day not in day_totals:
-            day_totals[day] = {"sum": 0, "count": 0}
+    if isinstance(dt_val, str):
+        dt = datetime.fromisoformat(dt_val)
+    else:
+        dt = datetime.combine(dt_val, datetime.min.time())
 
-        day_totals[day]["sum"] += e["attendance"]
-        day_totals[day]["count"] += 1
+    day = dt.strftime("%A")
+
+    if day not in day_totals:
+        day_totals[day] = {"sum": 0, "count": 0}
+
+    day_totals[day]["sum"] += e["attendance"]
+    day_totals[day]["count"] += 1
 
     for d in day_totals:
         avg = day_totals[d]["sum"] / day_totals[d]["count"]
