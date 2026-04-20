@@ -25,11 +25,12 @@ try:
     st.write("INSIGHT STATUS:", insight_res.status_code)
     st.write(insight_res.text)
 
-    perf = perf_res.json()
-    insights = insight_res.json()
+    perf = perf_res.json() if perf_res.ok else {}
+    insights = insight_res.json() if insight_res.ok else {}
 
 except Exception as e:
     st.error(str(e))
+    perf, insights = {}, {}
 
 st.title("Event Analytics")
 st.caption("Understand trends in attendance, engagement, and student behavior across events.")
