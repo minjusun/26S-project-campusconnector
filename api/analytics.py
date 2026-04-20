@@ -114,7 +114,7 @@ def insights():
         if isinstance(date_val, str):
             dt = datetime.fromisoformat(date_val)
         else:
-            dt = date_val
+            dt = datetime.combine(date_val, datetime.min.time())
         day = dt.strftime("%A")
 
         if day not in day_totals:
