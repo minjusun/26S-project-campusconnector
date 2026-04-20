@@ -19,17 +19,10 @@ try:
     perf_res = requests.get(f"{API}/analytics/event-performance-detailed", timeout=5)
     insight_res = requests.get(f"{API}/analytics/insights", timeout=5)
 
-    st.write("PERF STATUS:", perf_res.status_code)
-    st.write(perf_res.text)
-
-    st.write("INSIGHT STATUS:", insight_res.status_code)
-    st.write(insight_res.text)
-
     perf = perf_res.json() if perf_res.ok else {}
     insights = insight_res.json() if insight_res.ok else {}
 
-except Exception as e:
-    st.error(str(e))
+except Exception:
     perf, insights = {}, {}
 
 st.title("Event Analytics")

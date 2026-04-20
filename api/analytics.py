@@ -13,26 +13,31 @@ def event_performance_detailed():
     cursor.execute('''
         SELECT e.event_id, e.title,
                el.capacity,
-               COUNT(r.registration_id) AS registrations,
-               SUM(CASE WHEN r.status = 'registered' THEN 1 ELSE 0 END) AS attendance,
-               COUNT(c.comment_id) AS comments
+               (SELECT COUNT(*) FROM registration r
+                WHERE r.event_id = e.event_id) AS registrations,
+               (SELECT COUNT(*) FROM registration r
+                WHERE r.event_id = e.event_id
+                  AND r.status = 'registered') AS attendance,
+               (SELECT COUNT(*) FROM comments c
+                WHERE c.event_id = e.event_id) AS comments
         FROM events e
         JOIN event_location el ON e.location_id = el.location_id
-        LEFT JOIN registration r ON e.event_id = r.event_id
-        LEFT JOIN comments c ON e.event_id = c.event_id
         GROUP BY e.event_id, e.title, el.capacity
     ''')
 
     events = cursor.fetchall()
 
     best_event = None
-    total_rate = 0
+    total_rate = 0.0
 
     for e in events:
-        capacity = e["capacity"] or 1
-        attendance = e["attendance"] or 0
+        capacity = int(e["capacity"] or 1)
+        attendance = int(e["attendance"] or 0)
+        e["registrations"] = int(e["registrations"] or 0)
+        e["attendance"] = attendance
+        e["comments"] = int(e["comments"] or 0)
 
-        e["attendance_rate"] = attendance / capacity
+        e["attendance_rate"] = attendance / capacity if capacity else 0.0
         total_rate += e["attendance_rate"]
 
         if not best_event or e["attendance_rate"] > best_event["attendance_rate"]:
@@ -83,7 +88,7 @@ def insights():
         if cat not in category_totals:
             category_totals[cat] = {"sum": 0, "count": 0}
 
-        category_totals[cat]["sum"] += e["attendance"]
+        category_totals[cat]["sum"] += int(e["attendance"] or 0)
         category_totals[cat]["count"] += 1
 
     for cat in category_totals:
@@ -103,13 +108,19 @@ def insights():
     best_day = None
 
     for e in events:
-        dt = datetime.fromisoformat(e["date"])
+        date_val = e["date"]
+        if date_val is None:
+            continue
+        if isinstance(date_val, str):
+            dt = datetime.fromisoformat(date_val)
+        else:
+            dt = date_val
         day = dt.strftime("%A")
 
         if day not in day_totals:
             day_totals[day] = {"sum": 0, "count": 0}
 
-        day_totals[day]["sum"] += e["attendance"]
+        day_totals[day]["sum"] += int(e["attendance"] or 0)
         day_totals[day]["count"] += 1
 
     for d in day_totals:
